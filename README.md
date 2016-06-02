@@ -53,6 +53,8 @@ Need to be more general library.
 
 3. How to create CV-fold index.
 * previous version for CV-fold file. Using index.
+
+
 train: 
 [2,3,4,5,6,7,8,9]
 [0,1,4,5,6,7,8,9]
@@ -67,6 +69,8 @@ test:
 [8,9]
      
 * current version for CV-fold file(better than previous one). Using fold ID.
+
+
 [0,0,1,1,2,2,3,3,4,4]
 
 But current BaseModel uses previous version architectures. 
