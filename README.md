@@ -10,10 +10,11 @@
 
 5. Just run "python scripts/XXX.py"
 
-
 ------------------
 
+## Getting started: 30 seconds to stacking
 
+------------------
 
 ## Installation
 To install stacking, `cd` to the stacking folder and run the install command:
@@ -65,10 +66,14 @@ New user-defined models can be added here.
 Scikit-learn models can be used.
 
 Base model have some arguments.
-'s': Stacking. Svaing a oof prediction({model_name}_all_fold.csv) and average of test prediction based on fold-train models({model_name}_test.csv). These files will be used for next level stacking.
-'t': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). This is useful to get the single model performance.
-'st': Stacking and then training with all data and predict test ('s' and 't').
-'cv': Only cross validation without saving the prediction.
+
+- 's': Stacking. Svaing a oof prediction({model_name}_all_fold.csv) and average of test prediction based on fold-train models({model_name}_test.csv). These files will be used for next level stacking.
+
+- 't': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). This is useful to get the single model performance.
+
+- 'st': Stacking and then training with all data and predict test ('s' and 't').
+
+- 'cv': Only cross validation without saving the prediction.
 
 Define task details top of script.
 
