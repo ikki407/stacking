@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages  
-version = '0.1.0'
+version = '0.1.1'
 
 # pypandocを使ってREADME.mdをrstに変換する。最初からrstで書いた場合は不要。
 try:  
@@ -29,9 +31,9 @@ setup(
         # キーワードを書いておく
         keywords='stacking, ensemble, machine learning, cross validation, sckit-learn, XGBoost, Keras, Vowpal Wabbit',
         # 作者の名前
-        author=Ikki Tanaka,
+        author="Ikki Tanaka",
         # 連絡先
-        author_email=ikki0407@gmail.com,
+        author_email="ikki0407@gmail.com",
         # GitHubのリポジトリとか
         url='https://github.com/ikki407/stacking',
         # ライセンス
