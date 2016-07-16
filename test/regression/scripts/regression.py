@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # ----- for creating dataset -----
-from sklearn.datasets import load_digits
+from sklearn.datasets import load_boston
 from sklearn.cross_validation import train_test_split
 
 # ----- general import -----
@@ -15,7 +15,7 @@ from stacking.base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, TEMP_PATH,\
 from stacking.base_fixed_fold import load_data, save_pred_as_submit_format, create_cv_id, \
         eval_pred
 # ----- classifiers -----
-from stacking.base_fixed_fold import BaseModel, XGBClassifier, KerasClassifier
+from stacking.base_fixed_fold import BaseModel, XGBRegressor, KerasRegressor
 
 # ----- keras -----
 from keras.models import Sequential
@@ -26,10 +26,12 @@ from keras.layers.advanced_activations import LeakyReLU, PReLU
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l1, l2, l1l2, activity_l2
 
+
+
 # ----- Set problem type!! -----
-problem_type = 'classification'
-classification_type = 'binary'
-eval_type = 'auc'
+problem_type = 'regression'
+classification_type = ''
+eval_type = 'rmse'
 
 BaseModel.set_prob_type(problem_type, classification_type, eval_type)
 
@@ -38,10 +40,10 @@ BaseModel.set_prob_type(problem_type, classification_type, eval_type)
 # ----- create dataset -----
 
 # load data for binary
-digits = load_digits(2)
+boston = load_boston()
 
 # split data for train and test
-data_train, data_test, label_train, label_test = train_test_split(digits.data, digits.target)
+data_train, data_test, label_train, label_test = train_test_split(boston.data, boston.target)
 
 # concat data as pandas' dataframe format
 data_train = pd.DataFrame(data_train)
@@ -60,8 +62,8 @@ label_test.to_csv(INPUT_PATH + 'label_test.csv', index=False)
 # ----- END create dataset -----
 
 # -----create features -----
-train_log = train.iloc[:, :64].applymap(lambda x: np.log(x+1))
-test_log = test.iloc[:, :64].applymap(lambda x: np.log(x+1))
+train_log = train.iloc[:, :13].applymap(lambda x: np.log(x+1))
+test_log = test.iloc[:, :13].applymap(lambda x: np.log(x+1))
 
 train_log.columns = map(str, train_log.columns)
 test_log.columns = map(str, test_log.columns)
@@ -99,66 +101,65 @@ del X, y, test
 
 
 # Models in Stage 1
+
 PARAMS_V1 = {
-        'colsample_bytree':0.80,
-        'learning_rate':0.1,"eval_metric":"auc",
+        'colsample_bytree':0.5,
+        'learning_rate':0.1,'gamma':0,
         'max_depth':5, 'min_child_weight':1,
-        'nthread':4,
-        'objective':'binary:logistic','seed':407,
-        'silent':1, 'subsample':0.60,
-        }
+        'nthread':4,'reg_lambda':0,'reg_alpha':0,
+        'objective':'reg:linear', 'seed':407,
+        'silent':1, 'subsample':0.65
+         }
 
 class ModelV1(BaseModel):
         def build_model(self):
-            return XGBClassifier(params=self.params, num_round=10)
-
+            return XGBRegressor(params=self.params, num_round=10)
 
 PARAMS_V2 = {
-            'batch_size':8,
+            'batch_size':32,
             'nb_epoch':5,
             'verbose':1, 
             'callbacks':[],
             'validation_split':0.,
             'validation_data':None,
             'shuffle':True,
-            #'show_accuracy':True,
             'class_weight':None,
             'sample_weight':None,
             'normalize':True,
-            'categorize_y':True
+            'categorize_y':False,
             }
 
 class ModelV2(BaseModel):
         def build_model(self):
             model = Sequential()
-            model.add(Dense(64, input_shape=nn_input_dim_NN, init='he_normal'))
-            model.add(LeakyReLU(alpha=.00001))
-            model.add(Dropout(0.5))
-                        
-            model.add(Dense(2, init='he_normal'))
-            model.add(Activation('softmax'))
-            sgd = SGD(lr=0.1, decay=1e-5, momentum=0.9, nesterov=True)
+            model.add(Dense(64, input_shape=nn_input_dim_NN))
+            #model.add(Dropout(0.5))
+            model.add(Dense(1))
+            model.add(Activation('linear'))
+            sgd = SGD(lr=0.001)
+            model.compile(loss='mean_squared_error', optimizer=sgd, metrics=["accuracy"])
 
-            model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=["accuracy"])
-
-            return KerasClassifier(nn=model,**self.params)
-
+            return KerasRegressor(nn=model,**self.params)
+        
+        
+        
 # ----- END first stage stacking model -----
 
 # ----- Second stage stacking model -----
 
 PARAMS_V1_stage2 = {
-        'colsample_bytree':0.6,'colsample_bylevel':0.80,
-        'learning_rate':0.05,"eval_metric":"auc",
-        'max_depth':6, 'seed':1234,
-        'nthread':8,'reg_lambda':3,'reg_alpha':0.01,
-        'objective':'binary:logistic',
-        'silent':1, 'subsample':0.60,
-        }
+        'colsample_bytree':0.6,
+        'learning_rate':0.1,'gamma':0,
+        'max_depth':5, 'min_child_weight':1,
+        'nthread':4,'reg_lambda':0,'reg_alpha':0,
+        'objective':'reg:linear', 'seed':407,
+        'silent':1, 'subsample':0.8
+         }
 
 class ModelV1_stage2(BaseModel):
         def build_model(self):
-            return XGBClassifier(params=self.params, num_round=5)
+            return XGBRegressor(params=self.params, num_round=50)
+
 
 # ----- END first stage stacking model -----
 
