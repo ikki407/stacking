@@ -9,7 +9,7 @@ import numpy as np
 sys.path.append(os.getcwd())
 
 #各種PATH
-from base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
+from stacking.base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
 
 
 np.random.seed(407)
@@ -23,11 +23,11 @@ from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l1, l2, l1l2, activity_l2
 
 #base_ver2 utils
-from base_fixed_fold import load_data, save_pred_as_submit_format, create_cv_id
+from stacking.base_fixed_fold import load_data, save_pred_as_submit_format, create_cv_id
 
 
 #classifiers
-from base_fixed_fold import BaseModel, XGBClassifier, KerasClassifier
+from stacking.base_fixed_fold import BaseModel, XGBClassifier, KerasClassifier
 
 
 ########### First stage ###########
