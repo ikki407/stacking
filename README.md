@@ -8,7 +8,7 @@
 
 4. Need to define created features in that scripts.
 
-5. Just run "python scripts/XXX.py"
+5. Just run `sh run.sh` (`python scripts/XXX.py`)
 
 ------------------
 
