@@ -123,6 +123,15 @@ def load_data(flist, drop_duplicates=False):
         assert( all(X_train.columns == test.columns))
         print 'train shape after concat and drop_duplicates :{}'.format(X_train.shape)
 
+    # drop constant features
+    #X_train = X_train.loc[:, (X_train != X_train.ix[0]).any()] 
+    #test = test.loc[:, (test != test.ix[0]).any()] 
+
+    #common_col = list(set(X_train.columns.tolist()) and set(test.columns.tolist()))
+    #X_train = X_train[common_col]
+    #test = test[common_col]
+    #print 'shape after dropping constant features: {}'.format(X_train.shape)
+
     return X_train, y_train, test 
 
 #最終予測結果を提出フォーマットで保存する
@@ -266,23 +275,41 @@ class BaseModel(BaseEstimator):
     def build_model(self):
         return None
 
+    def make_multi_cols(self, num_class, name):
+        '''make cols for multi-class predictions'''
+        cols = ['c' + str(i) + '_' for i in xrange(num_class)]
+        cols = map(lambda x: x + name, cols)
+        return cols
+
 
     def run(self):
         print 'running model: {}'.format(self.name)
         X, y, test = self.load_data()
+        num_class = len(set(y)) # only for multi-class classification
         #print X.shape, test.shape
         #print X.dropna().shape, test.dropna().shape
 
         if self.kind == 't':
             clf = self.build_model()
             clf.fit(X, y)
+            
             if BaseModel.problem_type == 'classification':
                 y_submission = clf.predict_proba(test)#[:,1]#multi-class => 消す #コード変更
+                
+                if BaseModel.classification_type == 'binary':
+                    y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
+                    y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
+
+                elif BaseModel.classification_type == 'multi-class':
+                    saving_cols = self.make_multi_cols(num_class, '{}_pred'.format(self.name))
+                    y_submission = pd.DataFrame(y_submission,columns=saving_cols)
+                    y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
+
+
             elif BaseModel.problem_type == 'regression':
                 y_submission = clf.predict(test)#[:,1]#multi-class => 消す #コード変更
-
-            y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
-            y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
+                y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
+                y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
             #save_pred_as_submit_format(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name), TEMP_PATH+'OK_{}_TestInAllTrainingData.csv'.format(self.name))
             return 0 #保存して終了
         
@@ -316,7 +343,13 @@ class BaseModel(BaseEstimator):
         ############# for multi-class #############
         elif BaseModel.classification_type == 'multi-class':
             #TODO
-            pass
+            #trainの予測結果の保存
+            dataset_blend_train = np.zeros(X.shape[0]*num_class).reshape((X.shape[0],num_class))
+            #testの予測結果の保存
+            dataset_blend_test = np.zeros(test.shape[0]*num_class).reshape((test.shape[0],num_class))
+            #stacked_data_columns = X.columns.tolist()
+            #dataset_blend_test_j = np.zeros((test.shape[0], n_folds))
+
 
 
         evals = []
@@ -342,6 +375,12 @@ class BaseModel(BaseEstimator):
                 else:
                     y_submission = clf.predict_proba(X_test)
 
+            elif BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'multi-class':
+                if 'sklearn' in str(type(clf)):
+                    y_submission = clf.predict_proba(X_test) #Check!!
+                else:
+                    y_submission = clf.predict_proba(X_test)
+
             elif BaseModel.problem_type == 'regression':      
                 y_submission = clf.predict(X_test)
 
@@ -363,25 +402,23 @@ class BaseModel(BaseEstimator):
             if BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'binary':            
                 #if using the mean of the prediction of each n_fold
                 if 'sklearn' in str(type(clf)):
-                    dataset_blend_test_j[:, i] = clf.predict_proba(test)[:,1]
+                    dataset_blend_test += clf.predict_proba(test)[:,1]
                 else:
-                    dataset_blend_test_j[:, i] = clf.predict_proba(test)
+                    dataset_blend_test += clf.predict_proba(test)
 
             ############ multi-class classification ############
             elif BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'multi-class':            
-                #TODO
                 #if using the mean of the prediction of each n_fold
-                #dataset_blend_test_j += clf.predict_proba(test)
-                #dataset_blend_test_j /= n_folds
+                dataset_blend_test += clf.predict_proba(test)
                 pass
 
             ############ regression ############
             elif BaseModel.problem_type == 'regression':      
                 #if using the mean of the prediction of each n_fold
-                dataset_blend_test_j[:, i] = clf.predict(test)
+                dataset_blend_test += clf.predict(test)
 
 
-        dataset_blend_test = dataset_blend_test_j.mean(1)
+        dataset_blend_test /= n_folds
         
         for i in xrange(n_folds):
             print 'Fold{}: {}'.format(i+1, evals[i])
@@ -390,33 +427,53 @@ class BaseModel(BaseEstimator):
         #Saving 上でモデルの保存も追加できる
         if self.kind != 'cv':
             print 'Saving results'
-            dataset_blend_train = pd.DataFrame(dataset_blend_train,columns=['{}_stack'.format(self.name)])
-            dataset_blend_train.to_csv(TEMP_PATH+'{}_all_fold.csv'.format(self.name),index=False)
-            dataset_blend_test = pd.DataFrame(dataset_blend_test,columns=['{}_stack'.format(self.name)])
-            dataset_blend_test.to_csv(TEMP_PATH+'{}_test.csv'.format(self.name),index=False)
-            #save test prediction as submission format
-            #save_pred_as_submit_format(TEMP_PATH+'{}_test.csv'.format(self.name), TEMP_PATH+'OK_{}_test.csv'.format(self.name))
+
+            if (BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'binary') or (BaseModel.problem_type == 'regression'):
+                dataset_blend_train = pd.DataFrame(dataset_blend_train,columns=['{}_stack'.format(self.name)])
+                dataset_blend_train.to_csv(TEMP_PATH+'{}_all_fold.csv'.format(self.name),index=False)
+                dataset_blend_test = pd.DataFrame(dataset_blend_test,columns=['{}_stack'.format(self.name)])
+                dataset_blend_test.to_csv(TEMP_PATH+'{}_test.csv'.format(self.name),index=False)
+                
+
+            elif BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'multi-class':
+                saving_cols = self.make_multi_cols(num_class, '{}_stack'.format(self.name))
+                dataset_blend_train = pd.DataFrame(dataset_blend_train,columns=saving_cols)
+                dataset_blend_train.to_csv(TEMP_PATH+'{}_all_fold.csv'.format(self.name),index=False)
+
+                dataset_blend_test = pd.DataFrame(dataset_blend_test,columns=saving_cols)
+                dataset_blend_test.to_csv(TEMP_PATH+'{}_test.csv'.format(self.name),index=False)
+                
+
+
         
         if self.kind == 'st':
             #Stacking(cross-validation)後に全データで学習
             clf = self.build_model()
             clf.fit(X, y)
             if BaseModel.problem_type == 'classification':
-                if 'sklearn' in str(type(clf)):
-                    y_submission = clf.predict_proba(test)[:,1]#multi-class => 消す #コード変更
-                else:
+
+                if BaseModel.classification_type == 'binary':
+                    if 'sklearn' in str(type(clf)):
+                        y_submission = clf.predict_proba(test)[:,1]#multi-class => 消す #コード変更
+                    else:
+                        y_submission = clf.predict_proba(test)
+
+                    y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
+                    y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
+
+                elif BaseModel.classification_type == 'multi-class':
                     y_submission = clf.predict_proba(test)
+                    saving_cols = self.make_multi_cols(num_class, '{}_pred'.format(self.name))
+                    y_submission = pd.DataFrame(y_submission,columns=saving_cols)
+                    y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
+
             elif BaseModel.problem_type == 'regression':
                 y_submission = clf.predict(test)#[:,1]#multi-class => 消す #コード変更
             
-            y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
-            y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
-            #save_pred_as_submit_format(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name), TEMP_PATH+'OK_{}_TestInAllTrainingData.csv'.format(self.name))
+                y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
+                y_submission.to_csv(TEMP_PATH+'{}_TestInAllTrainingData.csv'.format(self.name),index=False)
 
         return
-
-
-
 
 
 
@@ -526,7 +583,7 @@ class KerasClassifier(BaseEstimator, ClassifierMixin):
         self.nn.set_weights(self.init_weight)
 
         #set callbacks
-        self.callbacks = [IntervalEvaluation(validation_data=(X, y), interval=5)]
+        #self.callbacks = [IntervalEvaluation(validation_data=(X, y), interval=5)]
         #print self.callbacks
 
         #print all(pd.DataFrame(np.isfinite(X)))

@@ -28,8 +28,8 @@ from keras.regularizers import l1, l2, l1l2, activity_l2
 
 # ----- Set problem type!! -----
 problem_type = 'classification'
-classification_type = 'binary'
-eval_type = 'auc'
+classification_type = 'multi-class'
+eval_type = 'logloss'
 
 BaseModel.set_prob_type(problem_type, classification_type, eval_type)
 
@@ -38,7 +38,7 @@ BaseModel.set_prob_type(problem_type, classification_type, eval_type)
 # ----- create dataset -----
 
 # load data for binary
-digits = load_digits(2)
+digits = load_digits()
 
 # split data for train and test
 data_train, data_test, label_train, label_test = train_test_split(digits.data, digits.target)
@@ -94,6 +94,7 @@ FEATURE_LIST_stage1 = {
 X,y,test  = load_data(flist=FEATURE_LIST_stage1, drop_duplicates=True)
 assert((False in X.columns == test.columns) == False)
 nn_input_dim_NN = X.shape[1:]
+output_dim = len(set(y))
 del X, y, test
 
 
@@ -101,11 +102,16 @@ del X, y, test
 # Models in Stage 1
 PARAMS_V1 = {
         'colsample_bytree':0.80,
-        'learning_rate':0.1,"eval_metric":"auc",
-        'max_depth':5, 'min_child_weight':1,
+        'learning_rate':0.1,
+        "eval_metric":"mlogloss",
+        'max_depth':5, 
+        'min_child_weight':1,
         'nthread':4,
-        'objective':'binary:logistic','seed':407,
-        'silent':1, 'subsample':0.60,
+        'seed':407,
+        'silent':1, 
+        'subsample':0.60,
+        'objective':'multi:softprob',
+        'num_class':output_dim,
         }
 
 class ModelV1(BaseModel):
@@ -114,8 +120,8 @@ class ModelV1(BaseModel):
 
 
 PARAMS_V2 = {
-            'batch_size':8,
-            'nb_epoch':5,
+            'batch_size':32,
+            'nb_epoch':15,
             'verbose':1, 
             'callbacks':[],
             'validation_split':0.,
@@ -135,11 +141,11 @@ class ModelV2(BaseModel):
             model.add(LeakyReLU(alpha=.00001))
             model.add(Dropout(0.5))
                         
-            model.add(Dense(2, init='he_normal'))
+            model.add(Dense(output_dim, init='he_normal'))
             model.add(Activation('softmax'))
             sgd = SGD(lr=0.1, decay=1e-5, momentum=0.9, nesterov=True)
 
-            model.compile(optimizer=sgd, loss='binary_crossentropy', metrics=["accuracy"])
+            model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=["accuracy"])
 
             return KerasClassifier(nn=model,**self.params)
 
@@ -148,17 +154,23 @@ class ModelV2(BaseModel):
 # ----- Second stage stacking model -----
 
 PARAMS_V1_stage2 = {
-        'colsample_bytree':0.6,'colsample_bylevel':0.80,
-        'learning_rate':0.05,"eval_metric":"auc",
-        'max_depth':6, 'seed':1234,
-        'nthread':8,'reg_lambda':3,'reg_alpha':0.01,
-        'objective':'binary:logistic',
-        'silent':1, 'subsample':0.60,
+        'colsample_bytree':0.8,
+        'learning_rate':0.05,
+        "eval_metric":"mlogloss",
+        'max_depth':4, 
+        'seed':1234,
+        'nthread':8,
+        'reg_lambda':0.01,
+        'reg_alpha':0.01,
+        'silent':1, 
+        'subsample':0.80,
+        'objective':'multi:softprob',
+        'num_class':output_dim,
         }
 
 class ModelV1_stage2(BaseModel):
         def build_model(self):
-            return XGBClassifier(params=self.params, num_round=5)
+            return XGBClassifier(params=self.params, num_round=40)
 
 # ----- END first stage stacking model -----
 
@@ -238,7 +250,10 @@ if __name__ == "__main__":
     pred = pd.read_csv(TEMP_PATH + 'v1_stage2_TestInAllTrainingData.csv')
 
     print 'Evaluation'
-    auc = eval_pred(label.target, pred.iloc[:,0], eval_type=eval_type)
+    mll = eval_pred(label.target, pred.values, eval_type=eval_type)
+
+    print 'saving final results'
+    pred.columns = ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9']
     pred = pd.concat([testID, pred], axis=1)
     pred.to_csv(TEMP_PATH + 'final_submission.csv', index=False)
 
