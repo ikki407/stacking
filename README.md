@@ -25,6 +25,9 @@
 - scripts/
   - script.csv (main script where concrete models defined)
 
+## Installation
+`python setup.py install`
+
 
 ## Details of scripts
 
