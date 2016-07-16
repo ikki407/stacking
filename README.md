@@ -10,6 +10,21 @@
 
 5. Just run "python scripts/XXX.py"
 
+## Tree of files
+- base_fixed_fold.py
+- data
+  - input
+    - train.csv
+    - test.csv
+  - output
+    - features
+      - features.csv
+    - temp
+      - temp.csv
+- scripts
+  - script.csv
+
+
 ## Details of scripts
 
 * base.py: 
@@ -47,71 +62,5 @@ Any level stacking can be defined.
 
 Need to be more general library.
 
-1. How to define target column in feature set. Target column need to be included in train dataset as column name 'target' now.
-
-2. Multi-classification task is needed. Binary-classification and regression tasks now.
-
-3. How to create CV-fold index.
-
-
-* previous version for CV-fold file. Using index.
-
-
-train: 
-
-
-[2,3,4,5,6,7,8,9]
-
-
-[0,1,4,5,6,7,8,9]
-
-
-[0,1,2,3,6,7,8,9]
-
-
-[0,1,2,3,4,5,8,9]
-
-
-[0,1,2,3,4,5,6,7]
-
-
-test:  
-
-
-[0,1]
-
-
-[2,3]
-
-
-[4,5]
-
-
-[6,7]
-
-
-[8,9]
-
-
-* current version for CV-fold file(better than previous one). Using fold ID.
-
-
-[0,0,1,1,2,2,3,3,4,4]
-
-But current BaseModel uses previous version architectures. 
-If current version is used, it is changed to previous format.
-So need to change that to using original format.
-And need to change .ix to .iloc for stable behavior.
-
-Need to change global CV-fold file name with new CV-fold file name, if new CV-fold be created.
-
-
-4. How to design saving prediction as submittion format (save_pred_as_submit_format).
-
-5. Change task-dependent functions to virtual functions? User need to define such functions themselves. (CV-fold index, save_pred_as_submit_format, )
-
-6. In class BaseModel, scikit-learn models can be used, but should reconsider that approach.
-
-7. In stacking, test data is not passed to models as validation data (XGBoost and NN). That is, validation scores are calculated after model training is done. It will be convenient to check the validation score every epoch. So need to pass fold-out data in model training as well.
-
+Please check isuues!!
 
