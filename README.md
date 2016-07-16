@@ -10,6 +10,27 @@
 
 5. Just run "python scripts/XXX.py"
 
+
+------------------
+
+
+
+## Installation
+To install stacking, `cd` to the stacking folder and run the install command:
+```
+sudo python setup.py install
+```
+
+You can also install stacking from PyPI:
+```
+pip install stacking
+```
+
+
+------------------
+
+
+
 ## Tree of files
 
 - base_fixed_fold.py (class of stacking)
@@ -25,8 +46,10 @@
 - scripts/
   - script.csv (main script where concrete models defined)
 
-## Installation
-`python setup.py install`
+
+
+------------------
+
 
 
 ## Details of scripts
@@ -59,6 +82,9 @@ Train and test feature set are defined here.
 Need to define CV-fold index.
 
 Any level stacking can be defined.
+
+
+------------------
 
 
 
