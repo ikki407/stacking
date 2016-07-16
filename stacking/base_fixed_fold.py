@@ -11,17 +11,17 @@ import logging
 
 ######### Problem Type #########
 ######### Change!!!!!! #########
-eval_type = 'auc' #{'logloss', 'auc', 'rmse'}
+eval_type_list = ('logloss', 'auc', 'rmse')
 
-problem_type = 'classification' #{'classification','regression'}
+problem_type_list = ('classification','regression')
 
-classification_type = 'binary'# {'binary', 'multi-class'}
+classification_type_list = ('binary', 'multi-class')
 
 
 
 ######### PATH #########
 ######### Change main folder name #########
-FOLDER_NAME = 'Santander'
+FOLDER_NAME = ''
 PATH = ''
 INPUT_PATH = 'data/input/' #path of original data and fold_index
 OUTPUT_PATH = 'data/output/'
@@ -29,9 +29,7 @@ TEMP_PATH = 'data/output/temp/' #path of saving each stacking prediction
 FEATURES_PATH = 'data/output/features/' #path of dataset created in feat_verXX.py
 
 
-# for creating fold index
-ORIGINAL_TRAIN_FORMAT = 'features_train.csv'
-# for saving the submitted format file
+# for saving the submitted format file(save_pred_as_submit_format())
 SUBMIT_FORMAT = 'sample_submission.csv'
 
 
@@ -66,6 +64,18 @@ import os
 from time import asctime, time
 import subprocess
 import csv
+
+
+
+
+
+
+
+
+
+
+
+
 
 ######### CV index #########
 cv_id_name='cv_id' #change if using fixed cv_index file
@@ -129,7 +139,7 @@ def save_pred_as_submit_format(pred_path, output_file, col_name=('ID', "TARGET")
     return
 
 #evalation function
-def eval_pred( y_true, y_pred, eval_type=eval_type):
+def eval_pred( y_true, y_pred, eval_type):
     if eval_type == 'logloss':#eval_typeはここに追加
         print "logloss: ", ll( y_true, y_pred )
         return ll( y_true, y_pred )             
@@ -183,6 +193,14 @@ class BaseModel(BaseEstimator):
         m.run()
    
     """
+    
+    # Problem type(class variables)
+    # Need to be set by BaseModel.set_prob_type()
+    problem_type = ''
+    classification_type = ''
+    eval_type = ''
+
+
     def __init__(self, name="", flist={}, params={}, kind='s', fold_name=cv_id_name):
         '''
         name: Model name
@@ -197,6 +215,21 @@ class BaseModel(BaseEstimator):
          'cv': Only cross validation without saving the prediction
 
         '''
+        if BaseModel.problem_type == 'classification':
+            if not ((BaseModel.classification_type in classification_type_list)
+                     and (BaseModel.eval_type in eval_type_list)):
+                raise ValueError('Problem Type, Classification Type, and Evaluation Type\
+                        should be set before model defined')
+
+        elif BaseModel.problem_type == 'regression':
+            if not BaseModel.eval_type in eval_type_list:
+                raise ValueError('Problem Type, and Evaluation Type\
+                        should be set before model defined')
+
+        else:
+            raise ValueError('Problem Type, Classification Type, and Evaluation Type\
+                        should be set before model defined')
+
         self.name = name
         self.flist = flist
         self.params = params
@@ -204,6 +237,31 @@ class BaseModel(BaseEstimator):
         self.fold_name = fold_name
         assert(self.kind in ['s', 't', 'st', 'cv'])
         
+    @classmethod
+    def set_prob_type(cls, problem_type, classification_type, eval_type):
+        """ Set problem type """
+        assert problem_type in problem_type_list, 'Need to set Problem Type'
+        if problem_type == 'classification':
+            assert classification_type in classification_type_list,\
+                                            'Need to set Classification Type'
+        assert eval_type in eval_type_list, 'Need to set Evaluation Type'
+        
+        cls.problem_type = problem_type
+        cls.classification_type = classification_type
+        cls.eval_type = eval_type
+        
+        if cls.problem_type == 'classification':
+            print 'Setting Problem:{}, Type:{}, Eval:{}'.format(cls.problem_type,
+                                                                cls.classification_type,
+                                                                cls.eval_type)
+
+        elif cls.problem_type == 'regression':
+            print 'Setting Problem:{}, Eval:{}'.format(cls.problem_type,
+                                                        cls.eval_type)
+
+        return
+
+
 
     def build_model(self):
         return None
@@ -218,9 +276,9 @@ class BaseModel(BaseEstimator):
         if self.kind == 't':
             clf = self.build_model()
             clf.fit(X, y)
-            if problem_type == 'classification':
+            if BaseModel.problem_type == 'classification':
                 y_submission = clf.predict_proba(test)#[:,1]#multi-class => 消す #コード変更
-            elif problem_type == 'regression':
+            elif BaseModel.problem_type == 'regression':
                 y_submission = clf.predict(test)#[:,1]#multi-class => 消す #コード変更
 
             y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
@@ -248,7 +306,7 @@ class BaseModel(BaseEstimator):
         #print "\nLevel 0"
 
         ############# for binary #############
-        if problem_type == 'regression' or classification_type == 'binary':
+        if BaseModel.problem_type == 'regression' or BaseModel.classification_type == 'binary':
             dataset_blend_train = np.zeros(X.shape[0]) #trainの予測結果の保存
             dataset_blend_test = np.zeros(test.shape[0]) #testの予測結果の保存
     
@@ -256,7 +314,7 @@ class BaseModel(BaseEstimator):
             dataset_blend_test_j = np.zeros((test.shape[0], n_folds))
         
         ############# for multi-class #############
-        elif classification_type == 'multi-class':
+        elif BaseModel.classification_type == 'multi-class':
             #TODO
             pass
 
@@ -276,7 +334,7 @@ class BaseModel(BaseEstimator):
             #print X_train,y_train,X_test,y_test
             clf.fit(X_train, y_train)
 
-            if problem_type == 'classification' and classification_type == 'binary':            
+            if BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'binary':            
                 #if using the mean of the prediction of each n_fold
                 #print str(type(clf))
                 if 'sklearn' in str(type(clf)):
@@ -284,7 +342,7 @@ class BaseModel(BaseEstimator):
                 else:
                     y_submission = clf.predict_proba(X_test)
 
-            elif problem_type == 'regression':      
+            elif BaseModel.problem_type == 'regression':      
                 y_submission = clf.predict(X_test)
 
             #add .values for numpy.
@@ -299,10 +357,10 @@ class BaseModel(BaseEstimator):
                 dataset_blend_train[test_fold.values] = y_submission
             
             #外に持ってく
-            evals.append(eval_pred(y_test, y_submission, eval_type))
+            evals.append(eval_pred(y_test, y_submission, BaseModel.eval_type))
 
             ############ binary classification ############
-            if problem_type == 'classification' and classification_type == 'binary':            
+            if BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'binary':            
                 #if using the mean of the prediction of each n_fold
                 if 'sklearn' in str(type(clf)):
                     dataset_blend_test_j[:, i] = clf.predict_proba(test)[:,1]
@@ -310,7 +368,7 @@ class BaseModel(BaseEstimator):
                     dataset_blend_test_j[:, i] = clf.predict_proba(test)
 
             ############ multi-class classification ############
-            elif problem_type == 'classification' and classification_type == 'multi-class':            
+            elif BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'multi-class':            
                 #TODO
                 #if using the mean of the prediction of each n_fold
                 #dataset_blend_test_j += clf.predict_proba(test)
@@ -318,7 +376,7 @@ class BaseModel(BaseEstimator):
                 pass
 
             ############ regression ############
-            elif problem_type == 'regression':      
+            elif BaseModel.problem_type == 'regression':      
                 #if using the mean of the prediction of each n_fold
                 dataset_blend_test_j[:, i] = clf.predict(test)
 
@@ -327,7 +385,7 @@ class BaseModel(BaseEstimator):
         
         for i in xrange(n_folds):
             print 'Fold{}: {}'.format(i+1, evals[i])
-        print '{} Mean: '.format(eval_type), np.mean(evals), ' Std: ', np.std(evals)
+        print '{} Mean: '.format(BaseModel.eval_type), np.mean(evals), ' Std: ', np.std(evals)
 
         #Saving 上でモデルの保存も追加できる
         if self.kind != 'cv':
@@ -343,12 +401,12 @@ class BaseModel(BaseEstimator):
             #Stacking(cross-validation)後に全データで学習
             clf = self.build_model()
             clf.fit(X, y)
-            if problem_type == 'classification':
+            if BaseModel.problem_type == 'classification':
                 if 'sklearn' in str(type(clf)):
                     y_submission = clf.predict_proba(test)[:,1]#multi-class => 消す #コード変更
                 else:
                     y_submission = clf.predict_proba(test)
-            elif problem_type == 'regression':
+            elif BaseModel.problem_type == 'regression':
                 y_submission = clf.predict(test)#[:,1]#multi-class => 消す #コード変更
             
             y_submission = pd.DataFrame(y_submission,columns=['{}_pred'.format(self.name)])
@@ -480,9 +538,9 @@ class KerasClassifier(BaseEstimator, ClassifierMixin):
         if self.normalize:
             X = (X - self.mean)/self.std
         
-        if classification_type == 'binary':
+        if BaseModel.classification_type == 'binary':
             return self.nn.predict_proba(X, batch_size=batch_size, verbose=verbose)[:,1]#multi-class => 消す #コード変更
-        elif classification_type == 'multi-class':
+        elif BaseModel.classification_type == 'multi-class':
             return self.nn.predict_proba(X, batch_size=batch_size, verbose=verbose)
 
 
@@ -623,9 +681,9 @@ class VWClassifier(BaseEstimator, ClassifierMixin):
         return self.readPredictFile()
 
     def predict_proba(self, X):
-        if classification_type == 'binary':
+        if BaseModel.classification_type == 'binary':
             return self.predict_model(X)
-        elif classification_type == 'multi-class':
+        elif BaseModel.classification_type == 'multi-class':
             return self.predict_model(X) #Check!
 
 
@@ -712,8 +770,9 @@ class KerasRegressor(BaseEstimator, RegressorMixin):
 
         if self.normalize:
             self.mean = np.mean(X,axis=0)
-            self.std = np.std(X,axis=0)
+            self.std = np.std(X,axis=0) + 1 #CAUSION!!!
             X = (X - self.mean)/self.std
+
         #if self.categorize_y:
         #    y = np_utils.to_categorical(y)
             
