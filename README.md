@@ -10,6 +10,21 @@
 
 5. Just run "python scripts/XXX.py"
 
+## Tree of files
+- base_fixed_fold.py
+- data
+  - input
+    - train.csv
+    - test.csv
+  - output
+    - features
+      - features.csv
+    - temp
+      - temp.csv
+- scripts
+  - script.csv
+
+
 ## Details of scripts
 
 * base.py: 
