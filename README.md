@@ -11,18 +11,18 @@
 5. Just run "python scripts/XXX.py"
 
 ## Tree of files
-- base_fixed_fold.py
-- data
-  - input
-    - train.csv
-    - test.csv
-  - output
-    - features
-      - features.csv
-    - temp
-      - temp.csv
-- scripts
-  - script.csv
+- base_fixed_fold.py (class of stacking)
+- data/
+  - input/
+    - train.csv (train dataset)
+    - test.csv (test dataset)
+  - output/
+    - features/
+      - features.csv (features user created)
+    - temp/
+      - temp.csv (files saved in stacking)
+- scripts/
+  - script.csv (main script where concrete models defined)
 
 
 ## Details of scripts
