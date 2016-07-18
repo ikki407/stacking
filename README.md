@@ -1,5 +1,11 @@
 # Library for stacking
 
+[![PyPI version](https://badge.fury.io/py/stacking.svg)](https://badge.fury.io/py/stacking)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ikki407/stacking/LICENSE)
+
+
+## How to use
+
 1. Set train and test dataset under data/input.
 
 2. Created features from original dataset need to be under data/output/features.
