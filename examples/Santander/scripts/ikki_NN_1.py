@@ -10,7 +10,7 @@ sys.path.append(os.getcwd())
 #os.chdir('/Users/IkkiTanaka/Documents/kaggle/Santander/')
 
 #各種PATH
-from stacking.base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
+from stacking.base import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
 
 
 np.random.seed(407)
@@ -24,11 +24,11 @@ from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l1, l2, l1l2, activity_l2
 
 #base_ver2 utils
-from stacking.base_fixed_fold import load_data, save_pred_as_submit_format, create_cv_id
+from stacking.base import load_data, save_pred_as_submit_format, create_cv_id
 
 
 #classifiers
-from stacking.base_fixed_fold import BaseModel, XGBClassifier, KerasClassifier
+from stacking.base import BaseModel, XGBClassifier, KerasClassifier
 
 
 ########### First stage ###########
