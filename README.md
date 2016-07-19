@@ -61,11 +61,11 @@ pip install stacking
 
 ## Details of scripts
 
-* base.py: 
-Base models for stacking are defined here (using sklearn.base.BaseEstimator).
-Some models are defined here. e.g., XGBoost, Keras, Vowpal Wabbit.
-These models are wrapped as scikit-learn like (using sklearn.base.ClassifierMixin, sklearn.base.RegressorMixin).
-That is, model class has some methods, fit() and predict_proba().
+- base.py: 
+  - Base models for stacking are defined here (using sklearn.base.BaseEstimator).
+  - Some models are defined here. e.g., XGBoost, Keras, Vowpal Wabbit.
+  - These models are wrapped as scikit-learn like (using sklearn.base.ClassifierMixin, sklearn.base.RegressorMixin).
+  - That is, model class has some methods, fit(), predict_proba(), and predict().
 
 New user-defined models can be added here.
 
@@ -73,30 +73,24 @@ Scikit-learn models can be used.
 
 Base model have some arguments.
 
-- 's': Stacking. Svaing a oof prediction({model_name}_all_fold.csv) and average of test prediction based on fold-train models({model_name}_test.csv). These files will be used for next level stacking.
+- 's': Stacking. Saving a oof(one-of-fold) prediction({model_name}_all_fold.csv) and average of test prediction based on train-fold models({model_name}_test.csv). These files will be used for next level stacking.
 
-- 't': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). This is useful to get the single model performance.
+- 't': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). In this training, no validation data are used.
 
 - 'st': Stacking and then training with all data and predict test ('s' and 't').
 
 - 'cv': Only cross validation without saving the prediction.
 
-Define task details top of script.
 
-
-* features.py:
-Create features based on original dataset.
-
-* scripts/XXX.py:
 Define several models and its parameters used for stacking.
-Train and test feature set are defined here.
+Define task details on the top of script.
+Train and test feature set are defined here. 
 Need to define CV-fold index.
 
 Any level stacking can be defined.
 
 
 ------------------
-
 
 
 ## TODO LIST
