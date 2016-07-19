@@ -9,13 +9,13 @@ import pandas as pd
 import numpy as np
 
 # ----- stacking library -----
-from stacking.base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, TEMP_PATH,\
+from stacking.base import FOLDER_NAME, PATH, INPUT_PATH, TEMP_PATH,\
         FEATURES_PATH, OUTPUT_PATH, SUBMIT_FORMAT
 # ----- utils -----
-from stacking.base_fixed_fold import load_data, save_pred_as_submit_format, create_cv_id, \
+from stacking.base import load_data, save_pred_as_submit_format, create_cv_id, \
         eval_pred
 # ----- classifiers -----
-from stacking.base_fixed_fold import BaseModel, XGBClassifier, KerasClassifier
+from stacking.base import BaseModel, XGBClassifier, KerasClassifier
 
 # ----- keras -----
 from keras.models import Sequential
