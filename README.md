@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ikki407/stacking/LICENSE)
 
 
-## How to use(Watch test folder)
+## About this library(watch test folder for more detailed)
 
 1. Set train and test dataset under data/input.
 
