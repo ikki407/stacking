@@ -10,8 +10,7 @@ import itertools
 import logging
 
 ######### Problem Type #########
-######### Change!!!!!! #########
-eval_type_list = ('logloss', 'auc', 'rmse')
+eval_type_list = ('logloss', 'auc', 'rmse') 
 
 problem_type_list = ('classification','regression')
 
@@ -23,6 +22,7 @@ classification_type_list = ('binary', 'multi-class')
 ######### Change main folder name #########
 FOLDER_NAME = ''
 PATH = ''
+DATA_PATH = 'data/'
 INPUT_PATH = 'data/input/' #path of original data and fold_index
 OUTPUT_PATH = 'data/output/'
 TEMP_PATH = 'data/output/temp/' #path of saving each stacking prediction
@@ -31,6 +31,29 @@ FEATURES_PATH = 'data/output/features/' #path of dataset created in feat_verXX.p
 
 # for saving the submitted format file(save_pred_as_submit_format())
 SUBMIT_FORMAT = 'sample_submission.csv'
+
+
+# check if path exsits
+if not os.path.exists(DATA_PATH):
+    print 'making directory {}'.format(DATA_PATH)
+    os.makedirs(DATA_PATH)
+
+if not os.path.exists(INPUT_PATH):
+    print 'making directory {}'.format(INPUT_PATH)
+    os.makedirs(INPUT_PATH)
+
+if not os.path.exists(OUTPUT_PATH):
+    print 'making directory {}'.format(OUTPUT_PATH)
+    os.makedirs(OUTPUT_PATH)
+
+if not os.path.exists(TEMP_PATH):
+    print 'making directory {}'.format(TEMP_PATH)
+    os.makedirs(TEMP_PATH)
+    
+if not os.path.exists(FEATURES_PATH):
+    print 'making directory {}'.format(FEATURES_PATH)
+    os.makedirs(FEATURES_PATH)
+   
 
 
 
@@ -51,13 +74,6 @@ from keras.callbacks import Callback
 ######### XGBoost #########
 import xgboost as xgb
 
-######### Evaluation ##########
-from sklearn.metrics import log_loss as ll
-from sklearn.metrics import roc_auc_score as AUC
-from sklearn.preprocessing import LabelEncoder
-from sklearn.cross_validation import KFold, StratifiedKFold
-from sklearn.metrics import mean_squared_error
-
 ######### Vowpal Wabbit ##########
 #import wabbit_wappa as ww
 import os
@@ -65,12 +81,12 @@ from time import asctime, time
 import subprocess
 import csv
 
-
-
-
-
-
-
+######### Evaluation ##########
+from sklearn.metrics import log_loss as ll
+from sklearn.metrics import roc_auc_score as AUC
+from sklearn.preprocessing import LabelEncoder
+from sklearn.cross_validation import KFold, StratifiedKFold
+from sklearn.metrics import mean_squared_error
 
 
 
@@ -115,7 +131,6 @@ def load_data(flist, drop_duplicates=False):
     assert( (False in X_train.columns == test.columns) == False)
     print 'train shape :{}'.format(X_train.shape)
     if drop_duplicates == True:
-        #add for ver.12. Use later version than ver.12.
         #delete identical columns
         unique_col = X_train.T.drop_duplicates().T.columns
         X_train = X_train[unique_col]
@@ -134,7 +149,6 @@ def load_data(flist, drop_duplicates=False):
 
     return X_train, y_train, test 
 
-#最終予測結果を提出フォーマットで保存する
 # ID is different by problem. So this function is disabled.
 def save_pred_as_submit_format(pred_path, output_file, col_name=('ID', "TARGET")):
     print 'writing prediction as submission format'
@@ -150,16 +164,19 @@ def save_pred_as_submit_format(pred_path, output_file, col_name=('ID', "TARGET")
 #evalation function
 def eval_pred( y_true, y_pred, eval_type):
     if eval_type == 'logloss':#eval_typeはここに追加
-        print "logloss: ", ll( y_true, y_pred )
-        return ll( y_true, y_pred )             
+        loss = ll( y_true, y_pred )
+        print "logloss: ", loss
+        return loss            
     
     elif eval_type == 'auc':
-        print "AUC: ", AUC( y_true, y_pred )
-        return AUC( y_true, y_pred )             
+        loss = AUC( y_true, y_pred )
+        print "AUC: ", loss
+        return loss             
     
     elif eval_type == 'rmse':
-        print "rmse: ", np.sqrt(mean_squared_error(y_true, y_pred))
-        return np.sqrt(mean_squared_error(y_true, y_pred))
+        loss = np.sqrt(mean_squared_error(y_true, y_pred))
+        print "rmse: ", loss
+        return loss
 
 
 
