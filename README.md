@@ -1,4 +1,4 @@
-# Library for stacking
+# Library for stacking(Stacked generalization)
 
 [![PyPI version](https://badge.fury.io/py/stacking.svg)](https://badge.fury.io/py/stacking)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ikki407/stacking/LICENSE)
