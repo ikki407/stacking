@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages  
-version = '0.1.2'
+version = '0.1.3'
 
 # pypandocを使ってREADME.mdをrstに変換する。最初からrstで書いた場合は不要。
 try:  
