@@ -40,7 +40,7 @@ pip install stacking
 
 ## Tree of files
 
-- base_fixed_fold.py (class of stacking)
+- base.py (class of stacking)
 - data/
   - input/
     - train.csv (train dataset)
@@ -73,7 +73,7 @@ Scikit-learn models can be used.
 
 Base model have some arguments.
 
-- 's': Stacking. Saving a oof(out-of-fold) prediction({model_name}_all_fold.csv) and average of test prediction based on train-fold models({model_name}_test.csv). These files will be used for next level stacking.
+- 's': Stacking. Saving oof(out-of-fold) prediction({model_name}_all_fold.csv) and average of test prediction based on train-fold models({model_name}_test.csv). These files will be used for next level stacking.
 
 - 't': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). In this training, no validation data are used.
 
