@@ -25,7 +25,7 @@
 ------------------
 
 ## Installation
-To install stacking, `cd` to the stacking folder and run the install command(up-to-date version, recommended):
+To install stacking, `cd` to the stacking folder and run the install command**(up-to-date version, recommended)**:
 ```
 sudo python setup.py install
 ```
