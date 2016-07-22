@@ -1,0 +1,566 @@
+Start model training and prediction...
+/usr/local/lib/python2.7/site-packages/pandas/io/excel.py:626: UserWarning: Installed openpyxl is not supported at this time. Use >=1.6.1 and <2.0.0.
+  .format(openpyxl_compat.start_ver, openpyxl_compat.stop_ver))
+Using Theano backend.
+Couldn't import dot_parser, loading of dot files will not be possible.
+Setting Problem:classification, Type:multi-class, Eval:logloss
+train shape :(1347, 128)
+train shape after concat and drop_duplicates :(1347, 123)
+Done StratifiedKFold
+Start stage 1 training
+running model: v1_stage1
+train shape :(1347, 128)
+train shape after concat and drop_duplicates :(1347, 123)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-mlogloss:1.966064
+[1]	train-mlogloss:1.715998
+[2]	train-mlogloss:1.526492
+[3]	train-mlogloss:1.367011
+[4]	train-mlogloss:1.233285
+[5]	train-mlogloss:1.119856
+[6]	train-mlogloss:1.021375
+[7]	train-mlogloss:0.930826
+[8]	train-mlogloss:0.852748
+[9]	train-mlogloss:0.782742
+logloss:  0.921622686552
+Fold 1
+[0]	train-mlogloss:1.970170
+[1]	train-mlogloss:1.723712
+[2]	train-mlogloss:1.530651
+[3]	train-mlogloss:1.370384
+[4]	train-mlogloss:1.237848
+[5]	train-mlogloss:1.124990
+[6]	train-mlogloss:1.024375
+[7]	train-mlogloss:0.937612
+[8]	train-mlogloss:0.858041
+[9]	train-mlogloss:0.786335
+logloss:  0.921291821169
+Fold 2
+[0]	train-mlogloss:1.966069
+[1]	train-mlogloss:1.720964
+[2]	train-mlogloss:1.520302
+[3]	train-mlogloss:1.360605
+[4]	train-mlogloss:1.229924
+[5]	train-mlogloss:1.116537
+[6]	train-mlogloss:1.015025
+[7]	train-mlogloss:0.928017
+[8]	train-mlogloss:0.849752
+[9]	train-mlogloss:0.779180
+logloss:  0.943574710466
+Fold 3
+[0]	train-mlogloss:1.958870
+[1]	train-mlogloss:1.714942
+[2]	train-mlogloss:1.528860
+[3]	train-mlogloss:1.368220
+[4]	train-mlogloss:1.237650
+[5]	train-mlogloss:1.122066
+[6]	train-mlogloss:1.020887
+[7]	train-mlogloss:0.933372
+[8]	train-mlogloss:0.854783
+[9]	train-mlogloss:0.787482
+logloss:  0.888221364272
+Fold 4
+[0]	train-mlogloss:1.966401
+[1]	train-mlogloss:1.728453
+[2]	train-mlogloss:1.533220
+[3]	train-mlogloss:1.376859
+[4]	train-mlogloss:1.242323
+[5]	train-mlogloss:1.127270
+[6]	train-mlogloss:1.026121
+[7]	train-mlogloss:0.936781
+[8]	train-mlogloss:0.857767
+[9]	train-mlogloss:0.789271
+logloss:  0.904479971922
+Fold1: 0.921622686552
+Fold2: 0.921291821169
+Fold3: 0.943574710466
+Fold4: 0.888221364272
+Fold5: 0.904479971922
+logloss Mean:  0.915838110876  Std:  0.0185699501454
+Saving results
+[0]	train-mlogloss:1.951160
+[1]	train-mlogloss:1.700004
+[2]	train-mlogloss:1.505150
+[3]	train-mlogloss:1.346276
+[4]	train-mlogloss:1.213890
+[5]	train-mlogloss:1.100408
+[6]	train-mlogloss:1.001415
+[7]	train-mlogloss:0.913100
+[8]	train-mlogloss:0.837161
+[9]	train-mlogloss:0.768476
+running model: v2_stage1
+train shape :(1347, 128)
+train shape after concat and drop_duplicates :(1347, 123)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+Epoch 1/15
+1074/1074 [==============================] - 0s - loss: 0.9692 - acc: 0.6872     
+Epoch 2/15
+1074/1074 [==============================] - 0s - loss: 0.4742 - acc: 0.8538     
+Epoch 3/15
+1074/1074 [==============================] - 0s - loss: 0.3666 - acc: 0.8948     
+Epoch 4/15
+1074/1074 [==============================] - 0s - loss: 0.3058 - acc: 0.9069     
+Epoch 5/15
+1074/1074 [==============================] - 0s - loss: 0.3634 - acc: 0.9013     
+Epoch 6/15
+1074/1074 [==============================] - 0s - loss: 0.4812 - acc: 0.8818     
+Epoch 7/15
+1074/1074 [==============================] - 0s - loss: 0.3873 - acc: 0.9060     
+Epoch 8/15
+1074/1074 [==============================] - 0s - loss: 0.4720 - acc: 0.8994     
+Epoch 9/15
+1074/1074 [==============================] - 0s - loss: 0.2933 - acc: 0.9451     
+Epoch 10/15
+1074/1074 [==============================] - 0s - loss: 0.4419 - acc: 0.9162     
+Epoch 11/15
+1074/1074 [==============================] - 0s - loss: 0.5089 - acc: 0.9134     
+Epoch 12/15
+1074/1074 [==============================] - 0s - loss: 0.3322 - acc: 0.9311     
+Epoch 13/15
+1074/1074 [==============================] - 0s - loss: 0.4494 - acc: 0.9218     
+Epoch 14/15
+1074/1074 [==============================] - 0s - loss: 0.4101 - acc: 0.9311     
+Epoch 15/15
+1074/1074 [==============================] - 0s - loss: 0.4264 - acc: 0.9190     
+128/273 [=============>................] - ETA: 0slogloss:  0.40346346155
+128/450 [=======>......................] - ETA: 0sFold 1
+Epoch 1/15
+1074/1074 [==============================] - 0s - loss: 0.9520 - acc: 0.7104       Epoch 2/15
+1074/1074 [==============================] - 0s - loss: 0.4499 - acc: 0.8706     
+Epoch 3/15
+1074/1074 [==============================] - 0s - loss: 0.4197 - acc: 0.8855     
+Epoch 4/15
+1074/1074 [==============================] - 0s - loss: 0.4589 - acc: 0.8771     
+Epoch 5/15
+1074/1074 [==============================] - 0s - loss: 0.3311 - acc: 0.9069     
+Epoch 6/15
+1074/1074 [==============================] - 0s - loss: 0.2771 - acc: 0.9209     
+Epoch 7/15
+1074/1074 [==============================] - 0s - loss: 0.2896 - acc: 0.9236     
+Epoch 8/15
+1074/1074 [==============================] - 0s - loss: 0.3065 - acc: 0.9218     
+Epoch 9/15
+1074/1074 [==============================] - 0s - loss: 0.2947 - acc: 0.9199     
+Epoch 10/15
+1074/1074 [==============================] - 0s - loss: 0.2557 - acc: 0.9274     
+Epoch 11/15
+1074/1074 [==============================] - 0s - loss: 0.2377 - acc: 0.9320     
+Epoch 12/15
+1074/1074 [==============================] - 0s - loss: 0.3439 - acc: 0.9181     
+Epoch 13/15
+1074/1074 [==============================] - 0s - loss: 0.3775 - acc: 0.9264     
+Epoch 14/15
+1074/1074 [==============================] - 0s - loss: 0.4148 - acc: 0.9097     
+Epoch 15/15
+1074/1074 [==============================] - 0s - loss: 0.3747 - acc: 0.9255     
+128/273 [=============>................] - ETA: 0slogloss:  0.160166162634
+128/450 [=======>......................] - ETA: 0sFold 2
+Epoch 1/15
+1077/1077 [==============================] - 0s - loss: 0.9210 - acc: 0.6955     
+Epoch 2/15
+1077/1077 [==============================] - 0s - loss: 0.4568 - acc: 0.8672     
+Epoch 3/15
+1077/1077 [==============================] - 0s - loss: 0.4661 - acc: 0.8663     
+Epoch 4/15
+1077/1077 [==============================] - 0s - loss: 0.5434 - acc: 0.8626     
+Epoch 5/15
+1077/1077 [==============================] - 0s - loss: 0.4415 - acc: 0.8951     
+Epoch 6/15
+1077/1077 [==============================] - 0s - loss: 0.3555 - acc: 0.9044     
+Epoch 7/15
+1077/1077 [==============================] - 0s - loss: 0.3170 - acc: 0.9192     
+Epoch 8/15
+1077/1077 [==============================] - 0s - loss: 0.3827 - acc: 0.9090     
+Epoch 9/15
+1077/1077 [==============================] - 0s - loss: 0.3442 - acc: 0.9183     
+Epoch 10/15
+1077/1077 [==============================] - 0s - loss: 0.3648 - acc: 0.9183     
+Epoch 11/15
+1077/1077 [==============================] - 0s - loss: 0.2854 - acc: 0.9285     
+Epoch 12/15
+1077/1077 [==============================] - 0s - loss: 0.3969 - acc: 0.9220     
+Epoch 13/15
+1077/1077 [==============================] - 0s - loss: 0.4014 - acc: 0.9081     
+Epoch 14/15
+1077/1077 [==============================] - 0s - loss: 0.3677 - acc: 0.9248     
+Epoch 15/15
+1077/1077 [==============================] - 0s - loss: 0.4247 - acc: 0.9359     
+128/270 [=============>................] - ETA: 0slogloss:  0.1527790438
+128/450 [=======>......................] - ETA: 0sFold 3
+Epoch 1/15
+1081/1081 [==============================] - 0s - loss: 0.9194 - acc: 0.7012     
+Epoch 2/15
+1081/1081 [==============================] - 0s - loss: 0.4292 - acc: 0.8696     
+Epoch 3/15
+1081/1081 [==============================] - 0s - loss: 0.3428 - acc: 0.8899     
+Epoch 4/15
+1081/1081 [==============================] - 0s - loss: 0.2761 - acc: 0.9112     
+Epoch 5/15
+1081/1081 [==============================] - 0s - loss: 0.3140 - acc: 0.9158     
+Epoch 6/15
+1081/1081 [==============================] - 0s - loss: 0.4180 - acc: 0.9001     
+Epoch 7/15
+1081/1081 [==============================] - 0s - loss: 0.3758 - acc: 0.9056     
+Epoch 8/15
+1081/1081 [==============================] - 0s - loss: 0.3446 - acc: 0.9241     
+Epoch 9/15
+1081/1081 [==============================] - 0s - loss: 0.3723 - acc: 0.9177     
+Epoch 10/15
+1081/1081 [==============================] - 0s - loss: 0.3941 - acc: 0.9195     
+Epoch 11/15
+1081/1081 [==============================] - 0s - loss: 0.4983 - acc: 0.8973     
+Epoch 12/15
+1081/1081 [==============================] - 0s - loss: 0.3542 - acc: 0.9260     
+Epoch 13/15
+1081/1081 [==============================] - 0s - loss: 0.3590 - acc: 0.9315     
+Epoch 14/15
+1081/1081 [==============================] - 0s - loss: 0.3609 - acc: 0.9241     
+Epoch 15/15
+1081/1081 [==============================] - 0s - loss: 0.3704 - acc: 0.9260       128/266 [=============>................] - ETA: 0slogloss:  0.266904319642
+128/450 [=======>......................] - ETA: 0sFold 4
+Epoch 1/15
+1082/1082 [==============================] - 0s - loss: 0.9127 - acc: 0.6950       Epoch 2/15
+1082/1082 [==============================] - 0s - loss: 0.4363 - acc: 0.8688     
+Epoch 3/15
+1082/1082 [==============================] - 0s - loss: 0.4074 - acc: 0.8799     
+Epoch 4/15
+1082/1082 [==============================] - 0s - loss: 0.2469 - acc: 0.9261     
+Epoch 5/15
+1082/1082 [==============================] - 0s - loss: 0.2989 - acc: 0.9122     
+Epoch 6/15
+1082/1082 [==============================] - 0s - loss: 0.2699 - acc: 0.9205     
+Epoch 7/15
+1082/1082 [==============================] - 0s - loss: 0.2559 - acc: 0.9224     
+Epoch 8/15
+1082/1082 [==============================] - 0s - loss: 0.3377 - acc: 0.9187     
+Epoch 9/15
+1082/1082 [==============================] - 0s - loss: 0.3152 - acc: 0.9150     
+Epoch 10/15
+1082/1082 [==============================] - 0s - loss: 0.2322 - acc: 0.9436     
+Epoch 11/15
+1082/1082 [==============================] - 0s - loss: 0.2463 - acc: 0.9390     
+Epoch 12/15
+1082/1082 [==============================] - 0s - loss: 0.3018 - acc: 0.9298     
+Epoch 13/15
+1082/1082 [==============================] - 0s - loss: 0.2882 - acc: 0.9316     
+Epoch 14/15
+1082/1082 [==============================] - 0s - loss: 0.3215 - acc: 0.9279     
+Epoch 15/15
+1082/1082 [==============================] - 0s - loss: 0.3714 - acc: 0.9261     
+128/265 [=============>................] - ETA: 0slogloss:  0.254154220217
+128/450 [=======>......................] - ETA: 0sFold1: 0.40346346155
+Fold2: 0.160166162634
+Fold3: 0.1527790438
+Fold4: 0.266904319642
+Fold5: 0.254154220217
+logloss Mean:  0.247493441569  Std:  0.0909336748223
+Saving results
+Epoch 1/15
+1347/1347 [==============================] - 0s - loss: 0.8254 - acc: 0.7342     
+Epoch 2/15
+1347/1347 [==============================] - 0s - loss: 0.5847 - acc: 0.8619     
+Epoch 3/15
+1347/1347 [==============================] - 0s - loss: 0.5711 - acc: 0.8641     
+Epoch 4/15
+1347/1347 [==============================] - 0s - loss: 1.1188 - acc: 0.8218     
+Epoch 5/15
+1347/1347 [==============================] - 0s - loss: 1.2484 - acc: 0.8478     
+Epoch 6/15
+1347/1347 [==============================] - 0s - loss: 1.1877 - acc: 0.8634     
+Epoch 7/15
+1347/1347 [==============================] - 0s - loss: 0.9538 - acc: 0.8924     
+Epoch 8/15
+1347/1347 [==============================] - 0s - loss: 1.1136 - acc: 0.8812     
+Epoch 9/15
+1347/1347 [==============================] - 0s - loss: 2.0799 - acc: 0.8322     
+Epoch 10/15
+1347/1347 [==============================] - 0s - loss: 3.3770 - acc: 0.7558     
+Epoch 11/15
+1347/1347 [==============================] - 0s - loss: 2.7664 - acc: 0.8122     
+Epoch 12/15
+1347/1347 [==============================] - 0s - loss: 2.8180 - acc: 0.8085     
+Epoch 13/15
+1347/1347 [==============================] - 0s - loss: 3.2234 - acc: 0.7862     
+Epoch 14/15
+1347/1347 [==============================] - 0s - loss: 3.1737 - acc: 0.7921     
+Epoch 15/15
+1347/1347 [==============================] - 0s - loss: 3.2316 - acc: 0.7892     
+128/450 [=======>......................] - ETA: 0sDone stage 1
+
+Start stage 2 training
+train shape :(1347, 148)
+train shape after concat and drop_duplicates :(1347, 143)
+running model: v1_stage2
+train shape :(1347, 148)
+train shape after concat and drop_duplicates :(1347, 143)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-mlogloss:2.068310
+[1]	train-mlogloss:1.884287
+[2]	train-mlogloss:1.731084
+[3]	train-mlogloss:1.601566
+[4]	train-mlogloss:1.488033
+[5]	train-mlogloss:1.388581
+[6]	train-mlogloss:1.300462
+[7]	train-mlogloss:1.220056
+[8]	train-mlogloss:1.146359
+[9]	train-mlogloss:1.079065
+[10]	train-mlogloss:1.017127
+[11]	train-mlogloss:0.959837
+[12]	train-mlogloss:0.906549
+[13]	train-mlogloss:0.857818
+[14]	train-mlogloss:0.811962
+[15]	train-mlogloss:0.768991
+[16]	train-mlogloss:0.729199
+[17]	train-mlogloss:0.691569
+[18]	train-mlogloss:0.656823
+[19]	train-mlogloss:0.623470
+[20]	train-mlogloss:0.592190
+[21]	train-mlogloss:0.562590
+[22]	train-mlogloss:0.534890
+[23]	train-mlogloss:0.508826
+[24]	train-mlogloss:0.483819
+[25]	train-mlogloss:0.460385
+[26]	train-mlogloss:0.438037
+[27]	train-mlogloss:0.417205
+[28]	train-mlogloss:0.397286
+[29]	train-mlogloss:0.378584
+[30]	train-mlogloss:0.360646
+[31]	train-mlogloss:0.343788
+[32]	train-mlogloss:0.327618
+[33]	train-mlogloss:0.312476
+[34]	train-mlogloss:0.297764
+[35]	train-mlogloss:0.284005
+[36]	train-mlogloss:0.270933
+[37]	train-mlogloss:0.258372
+[38]	train-mlogloss:0.246415
+[39]	train-mlogloss:0.235095
+logloss:  0.330596690049
+Fold 1
+[0]	train-mlogloss:2.065298
+[1]	train-mlogloss:1.883004
+[2]	train-mlogloss:1.732362
+[3]	train-mlogloss:1.603136
+[4]	train-mlogloss:1.489765
+[5]	train-mlogloss:1.390184
+[6]	train-mlogloss:1.302158
+[7]	train-mlogloss:1.222562
+[8]	train-mlogloss:1.149340
+[9]	train-mlogloss:1.082445
+[10]	train-mlogloss:1.019872
+[11]	train-mlogloss:0.963187
+[12]	train-mlogloss:0.910521
+[13]	train-mlogloss:0.861436
+[14]	train-mlogloss:0.815578
+[15]	train-mlogloss:0.772834
+[16]	train-mlogloss:0.732864
+[17]	train-mlogloss:0.695260
+[18]	train-mlogloss:0.660300
+[19]	train-mlogloss:0.627478
+[20]	train-mlogloss:0.596136
+[21]	train-mlogloss:0.567118
+[22]	train-mlogloss:0.539178
+[23]	train-mlogloss:0.513077
+[24]	train-mlogloss:0.488248
+[25]	train-mlogloss:0.464912
+[26]	train-mlogloss:0.442769
+[27]	train-mlogloss:0.421757
+[28]	train-mlogloss:0.401578
+[29]	train-mlogloss:0.382654
+[30]	train-mlogloss:0.364565
+[31]	train-mlogloss:0.347981
+[32]	train-mlogloss:0.331809
+[33]	train-mlogloss:0.316604
+[34]	train-mlogloss:0.301838
+[35]	train-mlogloss:0.287955
+[36]	train-mlogloss:0.274788
+[37]	train-mlogloss:0.262422
+[38]	train-mlogloss:0.250313
+[39]	train-mlogloss:0.239167
+logloss:  0.298980444888
+Fold 2
+[0]	train-mlogloss:2.071029
+[1]	train-mlogloss:1.886066
+[2]	train-mlogloss:1.736070
+[3]	train-mlogloss:1.605770
+[4]	train-mlogloss:1.495984
+[5]	train-mlogloss:1.397438
+[6]	train-mlogloss:1.307899
+[7]	train-mlogloss:1.227196
+[8]	train-mlogloss:1.152951
+[9]	train-mlogloss:1.085046
+[10]	train-mlogloss:1.023216
+[11]	train-mlogloss:0.965709
+[12]	train-mlogloss:0.913290
+[13]	train-mlogloss:0.863671
+[14]	train-mlogloss:0.818159
+[15]	train-mlogloss:0.775300
+[16]	train-mlogloss:0.735043
+[17]	train-mlogloss:0.697799
+[18]	train-mlogloss:0.662730
+[19]	train-mlogloss:0.629624
+[20]	train-mlogloss:0.598174
+[21]	train-mlogloss:0.568815
+[22]	train-mlogloss:0.540872
+[23]	train-mlogloss:0.514740
+[24]	train-mlogloss:0.490031
+[25]	train-mlogloss:0.467162
+[26]	train-mlogloss:0.445012
+[27]	train-mlogloss:0.424201
+[28]	train-mlogloss:0.404021
+[29]	train-mlogloss:0.384834
+[30]	train-mlogloss:0.366583
+[31]	train-mlogloss:0.349709
+[32]	train-mlogloss:0.333947
+[33]	train-mlogloss:0.318449
+[34]	train-mlogloss:0.303858
+[35]	train-mlogloss:0.289870
+[36]	train-mlogloss:0.276721
+[37]	train-mlogloss:0.264115
+[38]	train-mlogloss:0.252401
+[39]	train-mlogloss:0.241026
+logloss:  0.326584499081
+Fold 3
+[0]	train-mlogloss:2.072566
+[1]	train-mlogloss:1.887862
+[2]	train-mlogloss:1.735429
+[3]	train-mlogloss:1.605759
+[4]	train-mlogloss:1.492977
+[5]	train-mlogloss:1.392712
+[6]	train-mlogloss:1.302868
+[7]	train-mlogloss:1.222998
+[8]	train-mlogloss:1.149520
+[9]	train-mlogloss:1.082752
+[10]	train-mlogloss:1.021034
+[11]	train-mlogloss:0.964128
+[12]	train-mlogloss:0.912727
+[13]	train-mlogloss:0.863513
+[14]	train-mlogloss:0.818533
+[15]	train-mlogloss:0.775836
+[16]	train-mlogloss:0.735434
+[17]	train-mlogloss:0.697892
+[18]	train-mlogloss:0.662477
+[19]	train-mlogloss:0.629613
+[20]	train-mlogloss:0.598388
+[21]	train-mlogloss:0.569174
+[22]	train-mlogloss:0.541299
+[23]	train-mlogloss:0.514867
+[24]	train-mlogloss:0.489758
+[25]	train-mlogloss:0.466230
+[26]	train-mlogloss:0.443884
+[27]	train-mlogloss:0.422904
+[28]	train-mlogloss:0.402983
+[29]	train-mlogloss:0.384017
+[30]	train-mlogloss:0.365998
+[31]	train-mlogloss:0.348978
+[32]	train-mlogloss:0.332814
+[33]	train-mlogloss:0.317467
+[34]	train-mlogloss:0.302992
+[35]	train-mlogloss:0.289113
+[36]	train-mlogloss:0.275877
+[37]	train-mlogloss:0.263262
+[38]	train-mlogloss:0.251185
+[39]	train-mlogloss:0.239917
+logloss:  0.313996350071
+Fold 4
+[0]	train-mlogloss:2.069989
+[1]	train-mlogloss:1.884385
+[2]	train-mlogloss:1.734112
+[3]	train-mlogloss:1.604068
+[4]	train-mlogloss:1.492885
+[5]	train-mlogloss:1.392800
+[6]	train-mlogloss:1.302785
+[7]	train-mlogloss:1.221824
+[8]	train-mlogloss:1.147929
+[9]	train-mlogloss:1.080692
+[10]	train-mlogloss:1.018445
+[11]	train-mlogloss:0.961958
+[12]	train-mlogloss:0.909198
+[13]	train-mlogloss:0.860549
+[14]	train-mlogloss:0.814644
+[15]	train-mlogloss:0.771951
+[16]	train-mlogloss:0.731873
+[17]	train-mlogloss:0.694138
+[18]	train-mlogloss:0.659097
+[19]	train-mlogloss:0.625873
+[20]	train-mlogloss:0.594709
+[21]	train-mlogloss:0.565124
+[22]	train-mlogloss:0.537153
+[23]	train-mlogloss:0.510945
+[24]	train-mlogloss:0.486202
+[25]	train-mlogloss:0.462872
+[26]	train-mlogloss:0.440371
+[27]	train-mlogloss:0.419379
+[28]	train-mlogloss:0.399390
+[29]	train-mlogloss:0.380485
+[30]	train-mlogloss:0.362405
+[31]	train-mlogloss:0.345402
+[32]	train-mlogloss:0.329406
+[33]	train-mlogloss:0.313857
+[34]	train-mlogloss:0.299158
+[35]	train-mlogloss:0.285332
+[36]	train-mlogloss:0.272224
+[37]	train-mlogloss:0.259619
+[38]	train-mlogloss:0.247811
+[39]	train-mlogloss:0.236665
+logloss:  0.329877033942
+Fold1: 0.330596690049
+Fold2: 0.298980444888
+Fold3: 0.326584499081
+Fold4: 0.313996350071
+Fold5: 0.329877033942
+logloss Mean:  0.320007003606  Std:  0.0120918694333
+Saving results
+[0]	train-mlogloss:2.069637
+[1]	train-mlogloss:1.887634
+[2]	train-mlogloss:1.734515
+[3]	train-mlogloss:1.605354
+[4]	train-mlogloss:1.491827
+[5]	train-mlogloss:1.394144
+[6]	train-mlogloss:1.305720
+[7]	train-mlogloss:1.224522
+[8]	train-mlogloss:1.151340
+[9]	train-mlogloss:1.083678
+[10]	train-mlogloss:1.021581
+[11]	train-mlogloss:0.963667
+[12]	train-mlogloss:0.911159
+[13]	train-mlogloss:0.861980
+[14]	train-mlogloss:0.815716
+[15]	train-mlogloss:0.772958
+[16]	train-mlogloss:0.732763
+[17]	train-mlogloss:0.695202
+[18]	train-mlogloss:0.659625
+[19]	train-mlogloss:0.627042
+[20]	train-mlogloss:0.596399
+[21]	train-mlogloss:0.566736
+[22]	train-mlogloss:0.538894
+[23]	train-mlogloss:0.512304
+[24]	train-mlogloss:0.487581
+[25]	train-mlogloss:0.463881
+[26]	train-mlogloss:0.441630
+[27]	train-mlogloss:0.420450
+[28]	train-mlogloss:0.400374
+[29]	train-mlogloss:0.381286
+[30]	train-mlogloss:0.363145
+[31]	train-mlogloss:0.346309
+[32]	train-mlogloss:0.330075
+[33]	train-mlogloss:0.314723
+[34]	train-mlogloss:0.300255
+[35]	train-mlogloss:0.286504
+[36]	train-mlogloss:0.273267
+[37]	train-mlogloss:0.260831
+[38]	train-mlogloss:0.249039
+[39]	train-mlogloss:0.237870
+Done stage 2
+
+Saving as submission format
+Evaluation
+logloss:  0.304101339953
+saving final results
+Done...
+

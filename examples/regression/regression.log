@@ -1,0 +1,527 @@
+Start model training and prediction...
+/usr/local/lib/python2.7/site-packages/pandas/io/excel.py:626: UserWarning: Installed openpyxl is not supported at this time. Use >=1.6.1 and <2.0.0.
+  .format(openpyxl_compat.start_ver, openpyxl_compat.stop_ver))
+Using Theano backend.
+Couldn't import dot_parser, loading of dot files will not be possible.
+Setting Problem:regression, Eval:rmse
+train shape :(379, 26)
+train shape after concat and drop_duplicates :(379, 26)
+/usr/local/lib/python2.7/site-packages/sklearn/cross_validation.py:516: Warning: The least populated class in y has only 1 members, which is too few. The minimum number of labels for any class cannot be less than n_folds=5.
+  % (min_labels, self.n_folds)), Warning)
+Done StratifiedKFold
+Start stage 1 training
+running model: v1_stage1
+train shape :(379, 26)
+train shape after concat and drop_duplicates :(379, 26)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-rmse:21.460239
+[1]	train-rmse:19.383371
+[2]	train-rmse:17.488787
+[3]	train-rmse:15.838649
+[4]	train-rmse:14.305305
+[5]	train-rmse:12.905592
+[6]	train-rmse:11.668507
+[7]	train-rmse:10.525101
+[8]	train-rmse:9.516582
+[9]	train-rmse:8.631694
+rmse:  10.1288982466
+Fold 1
+[0]	train-rmse:21.911592
+[1]	train-rmse:19.768675
+[2]	train-rmse:17.815504
+[3]	train-rmse:16.039839
+[4]	train-rmse:14.469540
+[5]	train-rmse:13.051975
+[6]	train-rmse:11.766912
+[7]	train-rmse:10.626766
+[8]	train-rmse:9.602401
+[9]	train-rmse:8.682821
+rmse:  8.84849076381
+Fold 2
+[0]	train-rmse:21.646420
+[1]	train-rmse:19.516203
+[2]	train-rmse:17.596680
+[3]	train-rmse:15.886165
+[4]	train-rmse:14.353996
+[5]	train-rmse:12.957949
+[6]	train-rmse:11.701578
+[7]	train-rmse:10.600686
+[8]	train-rmse:9.575061
+[9]	train-rmse:8.646109
+rmse:  9.7101801377
+Fold 3
+[0]	train-rmse:21.468891
+[1]	train-rmse:19.426323
+[2]	train-rmse:17.556995
+[3]	train-rmse:15.851187
+[4]	train-rmse:14.257723
+[5]	train-rmse:12.868276
+[6]	train-rmse:11.634212
+[7]	train-rmse:10.536790
+[8]	train-rmse:9.505826
+[9]	train-rmse:8.606122
+rmse:  8.5336954401
+Fold 4
+[0]	train-rmse:21.656809
+[1]	train-rmse:19.507399
+[2]	train-rmse:17.597382
+[3]	train-rmse:15.875472
+[4]	train-rmse:14.296272
+[5]	train-rmse:12.926271
+[6]	train-rmse:11.690921
+[7]	train-rmse:10.566630
+[8]	train-rmse:9.542087
+[9]	train-rmse:8.620554
+rmse:  8.42807022628
+Fold1: 10.1288982466
+Fold2: 8.84849076381
+Fold3: 9.7101801377
+Fold4: 8.5336954401
+Fold5: 8.42807022628
+rmse Mean:  9.12986696291  Std:  0.672597739558
+Saving results
+[0]	train-rmse:21.653023
+[1]	train-rmse:19.514624
+[2]	train-rmse:17.573404
+[3]	train-rmse:15.838443
+[4]	train-rmse:14.294580
+[5]	train-rmse:12.895648
+[6]	train-rmse:11.645594
+[7]	train-rmse:10.519496
+[8]	train-rmse:9.546455
+[9]	train-rmse:8.635945
+running model: v2_stage1
+train shape :(379, 26)
+train shape after concat and drop_duplicates :(379, 26)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+(299, 26)
+Epoch 1/5
+299/299 [==============================] - 0s - loss: 551.4286 - acc: 0.0000e+00     
+Epoch 2/5
+299/299 [==============================] - 0s - loss: 453.3371 - acc: 0.0000e+00     
+Epoch 3/5
+299/299 [==============================] - 0s - loss: 331.9315 - acc: 0.0000e+00     
+Epoch 4/5
+299/299 [==============================] - 0s - loss: 201.3045 - acc: 0.0000e+00     
+Epoch 5/5
+299/299 [==============================] - 0s - loss: 99.8326 - acc: 0.0100         
+80/80 [==============================] - 0s
+rmse:  8.62155423845
+127/127 [==============================] - 0s
+Fold 1
+(296, 26)
+Epoch 1/5
+296/296 [==============================] - 0s - loss: 579.1014 - acc: 0.0000e+00     
+Epoch 2/5
+296/296 [==============================] - 0s - loss: 477.7077 - acc: 0.0000e+00     
+Epoch 3/5
+296/296 [==============================] - 0s - loss: 353.4004 - acc: 0.0000e+00     
+Epoch 4/5
+296/296 [==============================] - 0s - loss: 211.2142 - acc: 0.0000e+00     
+Epoch 5/5
+296/296 [==============================] - 0s - loss: 102.0423 - acc: 0.0000e+00     
+83/83 [==============================] - 0s
+rmse:  6.9387445033
+127/127 [==============================] - 0s
+Fold 2
+(312, 26)
+Epoch 1/5
+312/312 [==============================] - 0s - loss: 559.3621 - acc: 0.0000e+00     
+Epoch 2/5
+312/312 [==============================] - 0s - loss: 459.7974 - acc: 0.0000e+00     
+Epoch 3/5
+312/312 [==============================] - 0s - loss: 337.5488 - acc: 0.0000e+00     
+Epoch 4/5
+312/312 [==============================] - 0s - loss: 205.2396 - acc: 0.0000e+00     
+Epoch 5/5
+312/312 [==============================] - 0s - loss: 100.3090 - acc: 0.0064         
+67/67 [==============================] - 0s
+rmse:  8.34297543527
+127/127 [==============================] - 0s
+Fold 3
+(306, 26)
+Epoch 1/5
+306/306 [==============================] - 0s - loss: 552.5011 - acc: 0.0000e+00     
+Epoch 2/5
+306/306 [==============================] - 0s - loss: 456.3730 - acc: 0.0000e+00     
+Epoch 3/5
+306/306 [==============================] - 0s - loss: 336.4389 - acc: 0.0000e+00     
+Epoch 4/5
+306/306 [==============================] - 0s - loss: 206.5199 - acc: 0.0000e+00     
+Epoch 5/5
+306/306 [==============================] - 0s - loss: 102.6956 - acc: 0.0033         
+73/73 [==============================] - 0s
+rmse:  7.92693943875
+127/127 [==============================] - 0s
+Fold 4
+(303, 26)
+Epoch 1/5
+303/303 [==============================] - 0s - loss: 564.2647 - acc: 0.0000e+00     
+Epoch 2/5
+303/303 [==============================] - 0s - loss: 463.6392 - acc: 0.0000e+00     
+Epoch 3/5
+303/303 [==============================] - 0s - loss: 341.3333 - acc: 0.0000e+00     
+Epoch 4/5
+303/303 [==============================] - 0s - loss: 207.2336 - acc: 0.0000e+00     
+Epoch 5/5
+303/303 [==============================] - 0s - loss: 101.5125 - acc: 0.0066         
+76/76 [==============================] - 0s
+rmse:  7.74014697102
+127/127 [==============================] - 0s
+Fold1: 8.62155423845
+Fold2: 6.9387445033
+Fold3: 8.34297543527
+Fold4: 7.92693943875
+Fold5: 7.74014697102
+rmse Mean:  7.91407211736  Std:  0.577263975491
+Saving results
+(379, 26)
+Epoch 1/5
+379/379 [==============================] - 0s - loss: 550.4435 - acc: 0.0000e+00     
+Epoch 2/5
+379/379 [==============================] - 0s - loss: 433.6615 - acc: 0.0000e+00     
+Epoch 3/5
+379/379 [==============================] - 0s - loss: 284.1166 - acc: 0.0000e+00     
+Epoch 4/5
+379/379 [==============================] - 0s - loss: 140.4114 - acc: 0.0000e+00     
+Epoch 5/5
+379/379 [==============================] - 0s - loss: 58.8264 - acc: 0.0106          
+127/127 [==============================] - 0s
+Done stage 1
+
+Start stage 2 training
+train shape :(379, 28)
+train shape after concat and drop_duplicates :(379, 28)
+running model: v1_stage2
+train shape :(379, 28)
+train shape after concat and drop_duplicates :(379, 28)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-rmse:21.433868
+[1]	train-rmse:19.313658
+[2]	train-rmse:17.414547
+[3]	train-rmse:15.682866
+[4]	train-rmse:14.135520
+[5]	train-rmse:12.757397
+[6]	train-rmse:11.511084
+[7]	train-rmse:10.392574
+[8]	train-rmse:9.394241
+[9]	train-rmse:8.477269
+[10]	train-rmse:7.665926
+[11]	train-rmse:6.924080
+[12]	train-rmse:6.269907
+[13]	train-rmse:5.694932
+[14]	train-rmse:5.159016
+[15]	train-rmse:4.681692
+[16]	train-rmse:4.245215
+[17]	train-rmse:3.870390
+[18]	train-rmse:3.521265
+[19]	train-rmse:3.217872
+[20]	train-rmse:2.947291
+[21]	train-rmse:2.696630
+[22]	train-rmse:2.470384
+[23]	train-rmse:2.275565
+[24]	train-rmse:2.097988
+[25]	train-rmse:1.942437
+[26]	train-rmse:1.798211
+[27]	train-rmse:1.686135
+[28]	train-rmse:1.575138
+[29]	train-rmse:1.477644
+[30]	train-rmse:1.390267
+[31]	train-rmse:1.315365
+[32]	train-rmse:1.253470
+[33]	train-rmse:1.192069
+[34]	train-rmse:1.136934
+[35]	train-rmse:1.092080
+[36]	train-rmse:1.055910
+[37]	train-rmse:1.013229
+[38]	train-rmse:0.985318
+[39]	train-rmse:0.944940
+[40]	train-rmse:0.906670
+[41]	train-rmse:0.873594
+[42]	train-rmse:0.846532
+[43]	train-rmse:0.823414
+[44]	train-rmse:0.798632
+[45]	train-rmse:0.771477
+[46]	train-rmse:0.755027
+[47]	train-rmse:0.731482
+[48]	train-rmse:0.720859
+[49]	train-rmse:0.700629
+rmse:  5.11033559092
+Fold 1
+[0]	train-rmse:21.950598
+[1]	train-rmse:19.786770
+[2]	train-rmse:17.836203
+[3]	train-rmse:16.096397
+[4]	train-rmse:14.516150
+[5]	train-rmse:13.103594
+[6]	train-rmse:11.817600
+[7]	train-rmse:10.680290
+[8]	train-rmse:9.645952
+[9]	train-rmse:8.704689
+[10]	train-rmse:7.875473
+[11]	train-rmse:7.135621
+[12]	train-rmse:6.465139
+[13]	train-rmse:5.852880
+[14]	train-rmse:5.310160
+[15]	train-rmse:4.817985
+[16]	train-rmse:4.383177
+[17]	train-rmse:3.985453
+[18]	train-rmse:3.643324
+[19]	train-rmse:3.333955
+[20]	train-rmse:3.058774
+[21]	train-rmse:2.806230
+[22]	train-rmse:2.588285
+[23]	train-rmse:2.382243
+[24]	train-rmse:2.207661
+[25]	train-rmse:2.038853
+[26]	train-rmse:1.881647
+[27]	train-rmse:1.760947
+[28]	train-rmse:1.641475
+[29]	train-rmse:1.547654
+[30]	train-rmse:1.461400
+[31]	train-rmse:1.381441
+[32]	train-rmse:1.310586
+[33]	train-rmse:1.239966
+[34]	train-rmse:1.185874
+[35]	train-rmse:1.127926
+[36]	train-rmse:1.081722
+[37]	train-rmse:1.041416
+[38]	train-rmse:0.999372
+[39]	train-rmse:0.973264
+[40]	train-rmse:0.936841
+[41]	train-rmse:0.904277
+[42]	train-rmse:0.880143
+[43]	train-rmse:0.846415
+[44]	train-rmse:0.817219
+[45]	train-rmse:0.796430
+[46]	train-rmse:0.775711
+[47]	train-rmse:0.755104
+[48]	train-rmse:0.738686
+[49]	train-rmse:0.717682
+rmse:  3.35741445281
+Fold 2
+[0]	train-rmse:21.616972
+[1]	train-rmse:19.486925
+[2]	train-rmse:17.594925
+[3]	train-rmse:15.855960
+[4]	train-rmse:14.304344
+[5]	train-rmse:12.906014
+[6]	train-rmse:11.623151
+[7]	train-rmse:10.480371
+[8]	train-rmse:9.476409
+[9]	train-rmse:8.575076
+[10]	train-rmse:7.758598
+[11]	train-rmse:7.018035
+[12]	train-rmse:6.361608
+[13]	train-rmse:5.778099
+[14]	train-rmse:5.245385
+[15]	train-rmse:4.779763
+[16]	train-rmse:4.343358
+[17]	train-rmse:3.958568
+[18]	train-rmse:3.615325
+[19]	train-rmse:3.306908
+[20]	train-rmse:3.046128
+[21]	train-rmse:2.798109
+[22]	train-rmse:2.586370
+[23]	train-rmse:2.382396
+[24]	train-rmse:2.198618
+[25]	train-rmse:2.042116
+[26]	train-rmse:1.908142
+[27]	train-rmse:1.782326
+[28]	train-rmse:1.678665
+[29]	train-rmse:1.586105
+[30]	train-rmse:1.510429
+[31]	train-rmse:1.437310
+[32]	train-rmse:1.366329
+[33]	train-rmse:1.306410
+[34]	train-rmse:1.253356
+[35]	train-rmse:1.203978
+[36]	train-rmse:1.143236
+[37]	train-rmse:1.101276
+[38]	train-rmse:1.062287
+[39]	train-rmse:1.021331
+[40]	train-rmse:0.990478
+[41]	train-rmse:0.969126
+[42]	train-rmse:0.940924
+[43]	train-rmse:0.918063
+[44]	train-rmse:0.901881
+[45]	train-rmse:0.871746
+[46]	train-rmse:0.851850
+[47]	train-rmse:0.830250
+[48]	train-rmse:0.809146
+[49]	train-rmse:0.784232
+rmse:  3.95847294558
+Fold 3
+[0]	train-rmse:21.500263
+[1]	train-rmse:19.369068
+[2]	train-rmse:17.446007
+[3]	train-rmse:15.752491
+[4]	train-rmse:14.203217
+[5]	train-rmse:12.794514
+[6]	train-rmse:11.558968
+[7]	train-rmse:10.443541
+[8]	train-rmse:9.437558
+[9]	train-rmse:8.521877
+[10]	train-rmse:7.710204
+[11]	train-rmse:6.969085
+[12]	train-rmse:6.326314
+[13]	train-rmse:5.739127
+[14]	train-rmse:5.199827
+[15]	train-rmse:4.717518
+[16]	train-rmse:4.285378
+[17]	train-rmse:3.901798
+[18]	train-rmse:3.566563
+[19]	train-rmse:3.255246
+[20]	train-rmse:2.980312
+[21]	train-rmse:2.744169
+[22]	train-rmse:2.515918
+[23]	train-rmse:2.322591
+[24]	train-rmse:2.142171
+[25]	train-rmse:1.995754
+[26]	train-rmse:1.869389
+[27]	train-rmse:1.749672
+[28]	train-rmse:1.646007
+[29]	train-rmse:1.540246
+[30]	train-rmse:1.451256
+[31]	train-rmse:1.373643
+[32]	train-rmse:1.310848
+[33]	train-rmse:1.247439
+[34]	train-rmse:1.193273
+[35]	train-rmse:1.141011
+[36]	train-rmse:1.081092
+[37]	train-rmse:1.044775
+[38]	train-rmse:1.009683
+[39]	train-rmse:0.977899
+[40]	train-rmse:0.944353
+[41]	train-rmse:0.914479
+[42]	train-rmse:0.886313
+[43]	train-rmse:0.866246
+[44]	train-rmse:0.840361
+[45]	train-rmse:0.809351
+[46]	train-rmse:0.782031
+[47]	train-rmse:0.766250
+[48]	train-rmse:0.740931
+[49]	train-rmse:0.724375
+rmse:  3.37623810406
+Fold 4
+[0]	train-rmse:21.667534
+[1]	train-rmse:19.518637
+[2]	train-rmse:17.614847
+[3]	train-rmse:15.885302
+[4]	train-rmse:14.321652
+[5]	train-rmse:12.927368
+[6]	train-rmse:11.664187
+[7]	train-rmse:10.522998
+[8]	train-rmse:9.524585
+[9]	train-rmse:8.623240
+[10]	train-rmse:7.784175
+[11]	train-rmse:7.044929
+[12]	train-rmse:6.387733
+[13]	train-rmse:5.806611
+[14]	train-rmse:5.260399
+[15]	train-rmse:4.787786
+[16]	train-rmse:4.350583
+[17]	train-rmse:3.966942
+[18]	train-rmse:3.612418
+[19]	train-rmse:3.300167
+[20]	train-rmse:3.021814
+[21]	train-rmse:2.762704
+[22]	train-rmse:2.531867
+[23]	train-rmse:2.342999
+[24]	train-rmse:2.156665
+[25]	train-rmse:2.000324
+[26]	train-rmse:1.848235
+[27]	train-rmse:1.730711
+[28]	train-rmse:1.633237
+[29]	train-rmse:1.537106
+[30]	train-rmse:1.454808
+[31]	train-rmse:1.383173
+[32]	train-rmse:1.313322
+[33]	train-rmse:1.247039
+[34]	train-rmse:1.193797
+[35]	train-rmse:1.147491
+[36]	train-rmse:1.103840
+[37]	train-rmse:1.067217
+[38]	train-rmse:1.025317
+[39]	train-rmse:0.987467
+[40]	train-rmse:0.956651
+[41]	train-rmse:0.928003
+[42]	train-rmse:0.897176
+[43]	train-rmse:0.870629
+[44]	train-rmse:0.851326
+[45]	train-rmse:0.831614
+[46]	train-rmse:0.814478
+[47]	train-rmse:0.796468
+[48]	train-rmse:0.777236
+[49]	train-rmse:0.754658
+rmse:  2.76052335019
+Fold1: 5.11033559092
+Fold2: 3.35741445281
+Fold3: 3.95847294558
+Fold4: 3.37623810406
+Fold5: 2.76052335019
+rmse Mean:  3.71259688871  Std:  0.794967210964
+Saving results
+[0]	train-rmse:21.625097
+[1]	train-rmse:19.497084
+[2]	train-rmse:17.594870
+[3]	train-rmse:15.884705
+[4]	train-rmse:14.323754
+[5]	train-rmse:12.948560
+[6]	train-rmse:11.682737
+[7]	train-rmse:10.545982
+[8]	train-rmse:9.545427
+[9]	train-rmse:8.645279
+[10]	train-rmse:7.819230
+[11]	train-rmse:7.088207
+[12]	train-rmse:6.420172
+[13]	train-rmse:5.823949
+[14]	train-rmse:5.293105
+[15]	train-rmse:4.813994
+[16]	train-rmse:4.379896
+[17]	train-rmse:3.996978
+[18]	train-rmse:3.656417
+[19]	train-rmse:3.353275
+[20]	train-rmse:3.076930
+[21]	train-rmse:2.836037
+[22]	train-rmse:2.617049
+[23]	train-rmse:2.417989
+[24]	train-rmse:2.257994
+[25]	train-rmse:2.104805
+[26]	train-rmse:1.960114
+[27]	train-rmse:1.839201
+[28]	train-rmse:1.732011
+[29]	train-rmse:1.637176
+[30]	train-rmse:1.558998
+[31]	train-rmse:1.475365
+[32]	train-rmse:1.404994
+[33]	train-rmse:1.343585
+[34]	train-rmse:1.284655
+[35]	train-rmse:1.239316
+[36]	train-rmse:1.193491
+[37]	train-rmse:1.157423
+[38]	train-rmse:1.123858
+[39]	train-rmse:1.083024
+[40]	train-rmse:1.055814
+[41]	train-rmse:1.022479
+[42]	train-rmse:0.998262
+[43]	train-rmse:0.970522
+[44]	train-rmse:0.944253
+[45]	train-rmse:0.927402
+[46]	train-rmse:0.910781
+[47]	train-rmse:0.896629
+[48]	train-rmse:0.873052
+[49]	train-rmse:0.845344
+Done stage 2
+
+Saving as submission format
+Evaluation
+rmse:  4.3066123734
+Done...
+

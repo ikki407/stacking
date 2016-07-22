@@ -1,0 +1,254 @@
+Start model training and prediction...
+/usr/local/lib/python2.7/site-packages/pandas/io/excel.py:626: UserWarning: Installed openpyxl is not supported at this time. Use >=1.6.1 and <2.0.0.
+  .format(openpyxl_compat.start_ver, openpyxl_compat.stop_ver))
+Using Theano backend.
+Couldn't import dot_parser, loading of dot files will not be possible.
+train shape :(270, 128)
+train shape after concat and drop_duplicates :(270, 105)
+Done StratifiedKFold
+Start stage 1 training
+running model: v1_stage1
+train shape :(270, 128)
+train shape after concat and drop_duplicates :(270, 105)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-auc:0.990826
+[1]	train-auc:0.999827
+[2]	train-auc:0.999827
+[3]	train-auc:0.999827
+[4]	train-auc:0.999827
+[5]	train-auc:0.999827
+[6]	train-auc:0.999957
+[7]	train-auc:0.999913
+[8]	train-auc:0.999913
+[9]	train-auc:0.999913
+AUC:  1.0
+Fold 1
+[0]	train-auc:0.999870
+[1]	train-auc:1.000000
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+[5]	train-auc:1.000000
+[6]	train-auc:1.000000
+[7]	train-auc:1.000000
+[8]	train-auc:1.000000
+[9]	train-auc:1.000000
+AUC:  1.0
+Fold 2
+[0]	train-auc:0.990566
+[1]	train-auc:0.995197
+[2]	train-auc:0.999828
+[3]	train-auc:0.999871
+[4]	train-auc:0.999871
+[5]	train-auc:0.999914
+[6]	train-auc:0.999914
+[7]	train-auc:0.999914
+[8]	train-auc:0.999914
+[9]	train-auc:0.999914
+AUC:  1.0
+Fold 3
+[0]	train-auc:0.995030
+[1]	train-auc:0.999873
+[2]	train-auc:0.999873
+[3]	train-auc:0.999915
+[4]	train-auc:0.999830
+[5]	train-auc:0.999830
+[6]	train-auc:0.999830
+[7]	train-auc:0.999830
+[8]	train-auc:0.999915
+[9]	train-auc:0.999915
+AUC:  1.0
+Fold 4
+[0]	train-auc:0.995327
+[1]	train-auc:1.000000
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+[5]	train-auc:1.000000
+[6]	train-auc:1.000000
+[7]	train-auc:1.000000
+[8]	train-auc:1.000000
+[9]	train-auc:1.000000
+AUC:  0.980769230769
+Fold1: 1.0
+Fold2: 1.0
+Fold3: 1.0
+Fold4: 1.0
+Fold5: 0.980769230769
+auc Mean:  0.996153846154  Std:  0.00769230769231
+Saving results
+[0]	train-auc:0.999780
+[1]	train-auc:0.999890
+[2]	train-auc:0.999973
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+[5]	train-auc:1.000000
+[6]	train-auc:1.000000
+[7]	train-auc:1.000000
+[8]	train-auc:1.000000
+[9]	train-auc:1.000000
+running model: v2_stage1
+train shape :(270, 128)
+train shape after concat and drop_duplicates :(270, 105)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+Epoch 1/5
+208/215 [============================>.] - ETA: 0s - loss: 0.0912 - acc: 0.9760interval evaluation - epoch: 0 - score: 1.000000
+215/215 [==============================] - 0s - loss: 0.0883 - acc: 0.9767     
+Epoch 2/5
+215/215 [==============================] - 0s - loss: 4.5196e-04 - acc: 1.0000     
+Epoch 3/5
+215/215 [==============================] - 0s - loss: 0.0024 - acc: 1.0000         
+Epoch 4/5
+215/215 [==============================] - 0s - loss: 0.0049 - acc: 0.9953         
+Epoch 5/5
+215/215 [==============================] - 0s - loss: 0.0106 - acc: 0.9953         
+55/55 [==============================] - 0s
+AUC:  1.0
+90/90 [==============================] - 0s
+Fold 1
+Epoch 1/5
+200/215 [==========================>...] - ETA: 0s - loss: 0.0711 - acc: 0.9700interval evaluation - epoch: 0 - score: 1.000000
+215/215 [==============================] - 0s - loss: 0.0662 - acc: 0.9721     
+Epoch 2/5
+215/215 [==============================] - 0s - loss: 2.2040e-04 - acc: 1.0000     
+Epoch 3/5
+215/215 [==============================] - 0s - loss: 7.5618e-05 - acc: 1.0000     
+Epoch 4/5
+215/215 [==============================] - 0s - loss: 0.0074 - acc: 0.9953         
+Epoch 5/5
+215/215 [==============================] - 0s - loss: 2.6470e-04 - acc: 1.0000     
+55/55 [==============================] - 0s
+AUC:  1.0
+90/90 [==============================] - 0s
+Fold 2
+Epoch 1/5
+176/216 [=======================>......] - ETA: 0s - loss: 0.1368 - acc: 0.9489interval evaluation - epoch: 0 - score: 1.000000
+216/216 [==============================] - 0s - loss: 0.1201 - acc: 0.9537     
+Epoch 2/5
+216/216 [==============================] - 0s - loss: 0.0350 - acc: 0.9907         
+Epoch 3/5
+216/216 [==============================] - 0s - loss: 0.0591 - acc: 0.9907         
+Epoch 4/5
+216/216 [==============================] - 0s - loss: 2.8573e-04 - acc: 1.0000     
+Epoch 5/5
+216/216 [==============================] - 0s - loss: 0.0043 - acc: 0.9954         
+54/54 [==============================] - 0s
+AUC:  1.0
+90/90 [==============================] - 0s
+Fold 3
+Epoch 1/5
+208/217 [===========================>..] - ETA: 0s - loss: 0.0984 - acc: 0.9712interval evaluation - epoch: 0 - score: 0.999915
+217/217 [==============================] - 0s - loss: 0.0943 - acc: 0.9724     
+Epoch 2/5
+217/217 [==============================] - 0s - loss: 0.0527 - acc: 0.9816     
+Epoch 3/5
+217/217 [==============================] - 0s - loss: 0.0608 - acc: 0.9816     
+Epoch 4/5
+217/217 [==============================] - 0s - loss: 0.0662 - acc: 0.9908         
+Epoch 5/5
+217/217 [==============================] - 0s - loss: 0.0231 - acc: 0.9954         
+53/53 [==============================] - 0s
+AUC:  1.0
+90/90 [==============================] - 0s
+Fold 4
+Epoch 1/5
+160/217 [=====================>........] - ETA: 0s - loss: 0.1053 - acc: 0.9437interval evaluation - epoch: 0 - score: 1.000000
+217/217 [==============================] - 0s - loss: 0.1315 - acc: 0.9447     
+Epoch 2/5
+217/217 [==============================] - 0s - loss: 0.0408 - acc: 0.9954         
+Epoch 3/5
+217/217 [==============================] - 0s - loss: 0.0578 - acc: 0.9954         
+Epoch 4/5
+217/217 [==============================] - 0s - loss: 2.7980e-04 - acc: 1.0000     
+Epoch 5/5
+217/217 [==============================] - 0s - loss: 0.0091 - acc: 0.9908         
+53/53 [==============================] - 0s
+AUC:  1.0
+90/90 [==============================] - 0s
+Fold1: 1.0
+Fold2: 1.0
+Fold3: 1.0
+Fold4: 1.0
+Fold5: 1.0
+auc Mean:  1.0  Std:  0.0
+Saving results
+Epoch 1/5
+192/270 [====================>.........] - ETA: 0s - loss: 0.0686 - acc: 0.9479interval evaluation - epoch: 0 - score: 1.000000
+270/270 [==============================] - 0s - loss: 0.0557 - acc: 0.9593     
+Epoch 2/5
+270/270 [==============================] - 0s - loss: 0.0135 - acc: 0.9963         
+Epoch 3/5
+270/270 [==============================] - 0s - loss: 0.0225 - acc: 0.9926         
+Epoch 4/5
+270/270 [==============================] - 0s - loss: 0.0164 - acc: 0.9963     
+Epoch 5/5
+270/270 [==============================] - 0s - loss: 2.0183e-05 - acc: 1.0000     
+90/90 [==============================] - 0s
+Done stage 1
+
+Start stage 2 training
+train shape :(270, 130)
+train shape after concat and drop_duplicates :(270, 107)
+running model: v1_stage2
+train shape :(270, 130)
+train shape after concat and drop_duplicates :(270, 107)
+loading cv_fold file
+Creating train and test sets for stacking.
+Fold 0
+[0]	train-auc:0.995413
+[1]	train-auc:0.999913
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+AUC:  1.0
+Fold 1
+[0]	train-auc:1.000000
+[1]	train-auc:1.000000
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+AUC:  1.0
+Fold 2
+[0]	train-auc:0.990909
+[1]	train-auc:0.990909
+[2]	train-auc:0.995369
+[3]	train-auc:0.999914
+[4]	train-auc:1.000000
+AUC:  1.0
+Fold 3
+[0]	train-auc:1.000000
+[1]	train-auc:1.000000
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+AUC:  1.0
+Fold 4
+[0]	train-auc:1.000000
+[1]	train-auc:1.000000
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+AUC:  0.980769230769
+Fold1: 1.0
+Fold2: 1.0
+Fold3: 1.0
+Fold4: 1.0
+Fold5: 0.980769230769
+auc Mean:  0.996153846154  Std:  0.00769230769231
+Saving results
+[0]	train-auc:0.996350
+[1]	train-auc:0.999918
+[2]	train-auc:1.000000
+[3]	train-auc:1.000000
+[4]	train-auc:1.000000
+Done stage 2
+
+Saving as submission format
+Evaluation
+AUC:  1.0
+Done...
+
