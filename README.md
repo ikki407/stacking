@@ -20,10 +20,12 @@
 
 ## Getting started: 30 seconds to stacking
 
+ Under Construction
+
 ------------------
 
 ## Installation
-To install stacking, `cd` to the stacking folder and run the install command:
+To install stacking, `cd` to the stacking folder and run the install command(up-to-date version, recommended):
 ```
 sudo python setup.py install
 ```
@@ -47,9 +49,9 @@ pip install stacking
     - test.csv (test dataset)
   - output/
     - features/
-      - features.csv (features user created)
+      - features.csv (user-created features)
     - temp/
-      - temp.csv (files saved in stacking)
+      - temp.csv (prediction files that saved in stacking)
 - scripts/
   - script.csv (main script where concrete models defined)
 
