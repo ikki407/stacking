@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Start model training and prediction..."
-python scripts/binary.py
+python test_multiclass/scripts/multiclass.py
 
 echo "Done..."
 
