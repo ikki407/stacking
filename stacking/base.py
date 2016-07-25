@@ -346,7 +346,7 @@ class BaseModel(BaseEstimator):
             #dataset_blend_test_j = np.zeros((test.shape[0], n_folds))
 
 
-
+        ############## Start stacking ################
         evals = []
         for i in xrange(n_folds):# of n_folds
             train_fold = (a!=i)
@@ -360,7 +360,11 @@ class BaseModel(BaseEstimator):
             y_test = y[test_fold].dropna(how='all')
             
             #print X_train,y_train,X_test,y_test
-            clf.fit(X_train, y_train)
+            if 'sklearn' in str(type(clf)):
+                clf.fit(X_train, y_train)
+            else:
+                clf.fit(X_train, y_train, X_test, y_test)
+
 
             if BaseModel.problem_type == 'classification' and BaseModel.classification_type == 'binary':            
                 #if using the mean of the prediction of each n_fold
@@ -557,15 +561,9 @@ class KerasClassifier(BaseEstimator, ClassifierMixin):
         #set initial weights
         self.init_weight = self.nn.get_weights()
 
-    def fit(self, X, y, validation_data=None):
+    def fit(self, X, y, X_test=None, y_test=None):
         X = X.values#Need for Keras
         y = y.values#Need for Keras
-        if validation_data != None:
-            self.validation_data = validation_data
-            if self.normalize:
-                self.validation_data[0] = (validation_data[0] - np.mean(validation_data[0],axis=0))/np.std(validation_data[0],axis=0)
-            if self.categorize_y:
-                self.validation_data[1] = np_utils.to_categorical(validation_data[1])
 
         if self.normalize:
             self.mean = np.mean(X,axis=0)
@@ -573,6 +571,23 @@ class KerasClassifier(BaseEstimator, ClassifierMixin):
             X = (X - self.mean)/self.std
         if self.categorize_y:
             y = np_utils.to_categorical(y)
+
+
+        if X_test is not None:
+            X_test = X_test.values#Need for Keras
+            y_test = y_test.values#Need for Keras
+
+            if self.normalize:
+                X_test = (X_test - self.mean)/self.std
+            if self.categorize_y:
+                y_test = np_utils.to_categorical(y_test)
+
+            self.validation_data = (X_test, y_test)
+
+        else:
+            self.validation_data = []
+
+
         
         #set initial weights
         self.nn.set_weights(self.init_weight)
@@ -583,7 +598,7 @@ class KerasClassifier(BaseEstimator, ClassifierMixin):
 
         #print all(pd.DataFrame(np.isfinite(X)))
         #print X.shape
-        return self.nn.fit(X, y, batch_size=self.batch_size, nb_epoch=self.nb_epoch, verbose=self.verbose, callbacks=self.callbacks, validation_split=self.validation_split, validation_data=self.validation_data, shuffle=self.shuffle, class_weight=self.class_weight, sample_weight=self.sample_weight)
+        return self.nn.fit(X, y, batch_size=self.batch_size, nb_epoch=self.nb_epoch, validation_data=self.validation_data, verbose=self.verbose, callbacks=self.callbacks, validation_split=self.validation_split, shuffle=self.shuffle, class_weight=self.class_weight, sample_weight=self.sample_weight)
 
     def predict_proba(self, X, batch_size=128, verbose=1):
         X = X.values#Need for Keras
@@ -614,12 +629,17 @@ class XGBClassifier(BaseEstimator, ClassifierMixin):
 
         self.clf = xgb
         
-    def fit(self, X, y=[], sample_weight=None, eval_set=None, eval_metric=None,
+    def fit(self, X, y=[], X_test=None, y_test=None, sample_weight=None, eval_set=None, eval_metric=None,
             early_stopping_rounds=None, verbose=True):
         
-        dtrain = xgb.DMatrix(X, label=y,missing=-999)
+        dtrain = xgb.DMatrix(X, label=y, missing=-999)
+
+        if X_test is not None:
+            dtest = xgb.DMatrix(X_test, label=y_test, missing=-999)
+            watchlist  = [(dtrain, 'train'), (dtest, 'validation')]
         
-        watchlist  = [(dtrain,'train')]
+        else:
+            watchlist  = [(dtrain, 'train')]
         
         self.clf = xgb.train(self.params, dtrain, self.num_round, watchlist)
         return self.clf
@@ -804,7 +824,7 @@ class KerasRegressor(BaseEstimator, RegressorMixin):
         #set initial weights
         self.init_weight = self.nn.get_weights()
 
-    def fit(self, X, y, validation_data=None):
+    def fit(self, X, y, X_test=None, y_test=None):
         
         if self.random_sampling != None:
             self.sampling_col = np.random.choice(range(X.shape[1]),self.random_sampling,replace=False)
@@ -813,12 +833,6 @@ class KerasRegressor(BaseEstimator, RegressorMixin):
             X = X.values#Need for Keras
 
         y = y.values#Need for Keras
-        if validation_data != None:
-            self.validation_data = validation_data
-            if self.normalize:
-                self.validation_data[0] = (validation_data[0] - np.mean(validation_data[0],axis=0))/np.std(validation_data[0],axis=0)
-            #if self.categorize_y:
-            #    self.validation_data[1] = np_utils.to_categorical(validation_data[1])
 
         if self.normalize:
             self.mean = np.mean(X,axis=0)
@@ -827,11 +841,25 @@ class KerasRegressor(BaseEstimator, RegressorMixin):
 
         #if self.categorize_y:
         #    y = np_utils.to_categorical(y)
-            
+  
+        if X_test is not None:
+            X_test = X_test.values#Need for Keras
+            y_test = y_test.values#Need for Keras
+            if self.normalize:
+                X_test = (X_test - self.mean)/self.std
+            #if self.categorize_y:
+            #    y_test = np_utils.to_categorical(y_test)
+
+            self.validation_data = (X_test, y_test)
+
+        else:
+            self.validation_data = []
+
+
         #set initial weights
         self.nn.set_weights(self.init_weight)
         print X.shape
-        return self.nn.fit(X, y, batch_size=self.batch_size, nb_epoch=self.nb_epoch, verbose=self.verbose, callbacks=self.callbacks, validation_split=self.validation_split, validation_data=self.validation_data, shuffle=self.shuffle, class_weight=self.class_weight, sample_weight=self.sample_weight)
+        return self.nn.fit(X, y, batch_size=self.batch_size, nb_epoch=self.nb_epoch, validation_data=self.validation_data, verbose=self.verbose, callbacks=self.callbacks, validation_split=self.validation_split, shuffle=self.shuffle, class_weight=self.class_weight, sample_weight=self.sample_weight)
 
     def predict(self, X, batch_size=128, verbose=1):
         if self.random_sampling != None:
@@ -863,7 +891,7 @@ class XGBRegressor(BaseEstimator, RegressorMixin):
 
         self.clf = xgb
         
-    def fit(self, X, y=[], sample_weight=None, eval_set=None, eval_metric=None,
+    def fit(self, X, y=[], X_test=None, y_test=None, sample_weight=None, eval_set=None, eval_metric=None,
             early_stopping_rounds=None, verbose=True):
         #return self.clf.fit(X,y, sample_weight=sample_weight, eval_set=eval_set, eval_metric=eval_metric,early_stopping_rounds=early_stopping_rounds, verbose=verbose)
         
@@ -871,9 +899,14 @@ class XGBRegressor(BaseEstimator, RegressorMixin):
         #dtrain = xgb.DMatrix(X, label=y,missing=-999, weight=weights)
         
         dtrain = xgb.DMatrix(X, label=y,missing=-999)
+
+        if X_test is not None:
+            dtest = xgb.DMatrix(X_test, label=y_test, missing=-999)
+            watchlist  = [(dtrain, 'train'), (dtest, 'validation')]
         
-        watchlist  = [(dtrain,'train')]
-        
+        else:
+            watchlist  = [(dtrain, 'train')]
+ 
         #num_round = self.num_round
         #print self.clf
         self.clf = xgb.train(self.params, dtrain, self.num_round, watchlist)
