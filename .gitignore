@@ -1,3 +1,5 @@
 /dist/*
 /build/*
 /stacking.egg-info/*
+stacking/__init__.pyc
+stacking/base.pyc
