@@ -31,29 +31,7 @@ FEATURES_PATH = 'data/output/features/' #path of dataset created in feat_verXX.p
 
 # for saving the submitted format file(save_pred_as_submit_format())
 SUBMIT_FORMAT = 'sample_submission.csv'
-
-
-# check if path exsits
-if not os.path.exists(DATA_PATH):
-    print 'making directory {}'.format(DATA_PATH)
-    os.makedirs(DATA_PATH)
-
-if not os.path.exists(INPUT_PATH):
-    print 'making directory {}'.format(INPUT_PATH)
-    os.makedirs(INPUT_PATH)
-
-if not os.path.exists(OUTPUT_PATH):
-    print 'making directory {}'.format(OUTPUT_PATH)
-    os.makedirs(OUTPUT_PATH)
-
-if not os.path.exists(TEMP_PATH):
-    print 'making directory {}'.format(TEMP_PATH)
-    os.makedirs(TEMP_PATH)
-    
-if not os.path.exists(FEATURES_PATH):
-    print 'making directory {}'.format(FEATURES_PATH)
-    os.makedirs(FEATURES_PATH)
-   
+ 
 
 
 
