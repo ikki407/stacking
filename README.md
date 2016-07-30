@@ -6,12 +6,14 @@ Stacking (stacked generalization)
 
 ## Overview
 
-[ikki407/stacking](https://github.com/ikki407/stacking) - Simple and useful [stacking](https://en.wikipedia.org/wiki/Ensemble_learning#Stacking) library, written in Python.
+[ikki407/stacking](https://github.com/ikki407/stacking) - Simple and useful stacking library, written in Python.
 
 
 ## Description
 
-Stacking (sometimes called stacked generalization) involves training a learning algorithm to combine the predictions of several other learning algorithms. The basic idea is to use a pool of base classifiers, then using another classifier to combine their predictions, with the aim of reducing the generalization error.
+[Stacking](https://en.wikipedia.org/wiki/Ensemble_learning#Stacking) (sometimes called stacked generalization) involves training a learning algorithm to combine the predictions of several other learning algorithms. The basic idea is to use a pool of base classifiers, then using another classifier to combine their predictions, with the aim of reducing the generalization error. 
+
+[This blog](http://mlwave.com/kaggle-ensembling-guide/) is very helpful to understand stacking and ensemble learning.
 
 
 ## Usage
