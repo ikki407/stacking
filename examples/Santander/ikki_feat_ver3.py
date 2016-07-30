@@ -7,7 +7,7 @@ import os
 #os.chdir('/Users/IkkiTanaka/Documents/kaggle/Santander/')
 
 #各種PATH
-from stacking.base_fixed_fold import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
+from stacking.base import FOLDER_NAME, PATH, INPUT_PATH, OUTPUT_PATH, ORIGINAL_TRAIN_FORMAT, SUBMIT_FORMAT
 
 
 #import bloscpack
