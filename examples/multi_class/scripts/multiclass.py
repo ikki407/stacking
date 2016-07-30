@@ -26,6 +26,10 @@ from keras.layers.advanced_activations import LeakyReLU, PReLU
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l1, l2, l1l2, activity_l2
 
+# ----- scikit-learn -----
+from sklearn.linear_model import LogisticRegression as LR
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier, GradientBoostingClassifier
+
 # ----- Set problem type!! -----
 problem_type = 'classification'
 classification_type = 'multi-class'
@@ -149,10 +153,49 @@ class ModelV2(BaseModel):
 
             return KerasClassifier(nn=model,**self.params)
 
+PARAMS_V3 = {
+             'n_estimators':500, 'criterion':'gini', 'n_jobs':8, 'verbose':0,
+             'random_state':407, 'oob_score':True,
+             }
+
+class ModelV3(BaseModel):
+        def build_model(self):
+            return RandomForestClassifier(**self.params)
+
+PARAMS_V4 = {
+             'n_estimators':550, 'criterion':'gini', 'n_jobs':8, 'verbose':0,
+             'random_state':407,
+             }
+
+class ModelV4(BaseModel):
+        def build_model(self):
+            return ExtraTreesClassifier(**self.params)
+
+
+PARAMS_V5 = {
+             'n_estimators':300, 'learning_rate':0.05,'subsample':0.8,
+             'max_depth':5, 'verbose':1, 'max_features':0.9,
+             'random_state':407,
+             }
+
+class ModelV5(BaseModel):
+        def build_model(self):
+            return GradientBoostingClassifier(**self.params)
+
+PARAMS_V6 = {
+             'n_estimators':650, 'learning_rate':0.01,'subsample':0.8,
+             'max_depth':5, 'verbose':1, 'max_features':0.82,
+             'random_state':407,
+             }
+
+class ModelV6(BaseModel):
+        def build_model(self):
+            return GradientBoostingClassifier(**self.params)
+
 # ----- END first stage stacking model -----
 
 # ----- Second stage stacking model -----
-
+'''
 PARAMS_V1_stage2 = {
         'colsample_bytree':0.8,
         'learning_rate':0.05,
@@ -171,6 +214,21 @@ PARAMS_V1_stage2 = {
 class ModelV1_stage2(BaseModel):
         def build_model(self):
             return XGBClassifier(params=self.params, num_round=40)
+'''
+
+PARAMS_V1_stage2 = {
+                    'penalty':'l2',
+                    'tol':0.0001, 
+                    'C':1.0, 
+                    'random_state':None, 
+                    'verbose':0, 
+                    'n_jobs':8
+                    }
+
+class ModelV1_stage2(BaseModel):
+        def build_model(self):
+            return LR(**self.params)
+
 
 # ----- END first stage stacking model -----
 
@@ -198,6 +256,34 @@ if __name__ == "__main__":
                 )
     m.run()
 
+    m = ModelV3(name="v3_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V3,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV4(name="v4_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V4,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV5(name="v5_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V5,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV6(name="v6_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V6,
+                kind = 'st'
+                )
+    m.run()
+
     print 'Done stage 1'
     print 
     ######## stage2 Models #########
@@ -212,7 +298,10 @@ if __name__ == "__main__":
                          
                          TEMP_PATH + 'v1_stage1_all_fold.csv',
                          TEMP_PATH + 'v2_stage1_all_fold.csv',
-
+                         TEMP_PATH + 'v3_stage1_all_fold.csv',
+                         TEMP_PATH + 'v4_stage1_all_fold.csv',
+                         TEMP_PATH + 'v5_stage1_all_fold.csv',
+                         TEMP_PATH + 'v6_stage1_all_fold.csv',
 
                         ),#targetはここに含まれる
                 'test':(INPUT_PATH + 'test.csv',
@@ -220,6 +309,10 @@ if __name__ == "__main__":
                          
                          TEMP_PATH + 'v1_stage1_test.csv',
                          TEMP_PATH + 'v2_stage1_test.csv',
+                         TEMP_PATH + 'v3_stage1_test.csv',
+                         TEMP_PATH + 'v4_stage1_test.csv',
+                         TEMP_PATH + 'v5_stage1_test.csv',
+                         TEMP_PATH + 'v6_stage1_test.csv', 
                        
                         ),
                 }
@@ -249,7 +342,7 @@ if __name__ == "__main__":
     testID = pd.DataFrame(testID, columns=['ID'])
     pred = pd.read_csv(TEMP_PATH + 'v1_stage2_TestInAllTrainingData.csv')
 
-    print 'Evaluation'
+    print 'Test evaluation'
     mll = eval_pred(label.target, pred.values, eval_type=eval_type)
 
     print 'saving final results'

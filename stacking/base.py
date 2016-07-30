@@ -421,7 +421,7 @@ class BaseModel(BaseEstimator):
         
         for i in xrange(n_folds):
             print 'Fold{}: {}'.format(i+1, evals[i])
-        print '{} Mean: '.format(BaseModel.eval_type), np.mean(evals), ' Std: ', np.std(evals)
+        print '{} CV Mean: '.format(BaseModel.eval_type), np.mean(evals), ' Std: ', np.std(evals)
 
         #Saving 上でモデルの保存も追加できる
         if self.kind != 'cv':
