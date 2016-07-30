@@ -1,28 +1,39 @@
-# Library for stacking(Stacked generalization)
+Stacking (stacked generalization)
+====
 
 [![PyPI version](https://badge.fury.io/py/stacking.svg)](https://badge.fury.io/py/stacking)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ikki407/stacking/LICENSE)
 
+## Overview
 
-## About this library(watch test folder for more detailed)
+[ikki407/stacking](https://github.com/ikki407/stacking) - Simple and useful [stacking](https://en.wikipedia.org/wiki/Ensemble_learning#Stacking) library, written in Python.
 
-1. Set train and test dataset under data/input.
 
-2. Created features from original dataset need to be under data/output/features.
+## Description
 
-3. Models for stacking are defined in scripts under scripts folder.
+Stacking (sometimes called stacked generalization) involves training a learning algorithm to combine the predictions of several other learning algorithms. The basic idea is to use a pool of base classifiers, then using another classifier to combine their predictions, with the aim of reducing the generalization error.
 
-4. Need to define created features in that scripts.
 
-5. Just run `sh run.sh` (`python scripts/XXX.py`)
+## Usage
 
-------------------
+**Working Example:**
+ 
+ * [binary classification](https://github.com/ikki407/stacking/tree/master/examples/binary_class)
+ * [multi-class classification](https://github.com/ikki407/stacking/tree/master/examples/multi_class)
+ * [regression](https://github.com/ikki407/stacking/tree/master/examples/regression)
 
-## Getting started: 30 seconds to stacking
+To run these examples, just run `sh run.sh`. Note that: 
 
- Under Construction
+1. Set train and test dataset under data/input
 
-------------------
+2. Created features from original dataset need to be under data/output/features
+
+3. Models for stacking are defined in `scripts.py` under scripts folder
+
+4. Need to define created features in that scripts
+
+5. Just run `sh run.sh` (`python scripts/XXX.py`).
+
 
 ## Installation
 To install stacking, `cd` to the stacking folder and run the install command**(up-to-date version, recommended)**:
@@ -36,29 +47,13 @@ pip install stacking
 ```
 
 
-------------------
+## Files
 
-
-
-## Tree of files
-
-- base.py (class of stacking)
-- data/
-  - input/
-    - train.csv (train dataset)
-    - test.csv (test dataset)
-  - output/
-    - features/
-      - features.csv (user-created features)
-    - temp/
-      - temp.csv (prediction files that saved in stacking)
-- scripts/
-  - script.csv (main script where concrete models defined)
-
-
-
-------------------
-
+- [stacking/base.py](https://github.com/ikki407/stacking/blob/master/stacking/base.py) : stacking module
+- examples/
+ - [binary_class](https://github.com/ikki407/stacking/tree/master/examples/binary_class) : binary classification
+ - [multi_class](https://github.com/ikki407/stacking/tree/master/examples/multi_class) : multi-class classification
+ - [regression](https://github.com/ikki407/stacking/tree/master/examples/regression) : regression
 
 
 ## Details of scripts
@@ -91,13 +86,11 @@ Need to define CV-fold index.
 
 Any level stacking can be defined.
 
+## Reference
 
-------------------
+[1] [Wolpert, David H. Stacked generalization, Neural Networks, 5(2), 241-259](http://machine-learning.martinsewell.com/ensembles/stacking/Wolpert1992.pdf)
 
+[2] [Ensemble learning(Stacking)](https://en.wikipedia.org/wiki/Ensemble_learning#Stacking)
 
-## TODO LIST
-
-Need to be more general library.
-
-Please check isuues!!
+[3] [KAGGLE ENSEMBLING GUIDE](http://mlwave.com/kaggle-ensembling-guide/)
 
