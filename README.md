@@ -18,7 +18,7 @@ Stacking (stacked generalization)
 
 ## Usage
 
-**Working Example:**
+**See working example:**
  
  * [binary classification](https://github.com/ikki407/stacking/tree/master/examples/binary_class)
  * [multi-class classification](https://github.com/ikki407/stacking/tree/master/examples/multi_class)
