@@ -26,7 +26,11 @@ from keras.layers.advanced_activations import LeakyReLU, PReLU
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l1, l2, l1l2, activity_l2
 
-
+# ----- scikit-learn -----
+from sklearn.svm import SVR
+from sklearn import linear_model
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 
 # ----- Set problem type!! -----
 problem_type = 'regression'
@@ -141,7 +145,47 @@ class ModelV2(BaseModel):
 
             return KerasRegressor(nn=model,**self.params)
         
-        
+
+PARAMS_V3 = {'kernel':'rbf', 
+             'C':1e3, 
+             'gamma':0.1
+             }
+
+class ModelV3(BaseModel):
+        def build_model(self):
+            return SVR(**self.params)
+
+PARAMS_V4 = {'n_neighbors':5,
+             'weights':'distance', 
+             'p':2, 
+             'n_jobs':4
+             }
+
+class ModelV4(BaseModel):
+        def build_model(self):
+            return KNeighborsRegressor(**self.params)
+
+PARAMS_V5 = {'n_estimators':150,
+             'learning_rate':0.1, 
+             'max_depth':18, 
+             'random_state':0, 
+             'loss':'lad', 
+             'subsample':0.7, 
+             'verbose':1
+            }
+
+class ModelV5(BaseModel):
+        def build_model(self):
+            return GradientBoostingRegressor(**self.params)
+
+PARAMS_V6 = {}
+
+class ModelV6(BaseModel):
+        def build_model(self):
+            # Direct passing model parameters can be used
+            return linear_model.BayesianRidge(normalize=True, verbose=True, compute_score=True)
+
+
         
 # ----- END first stage stacking model -----
 
@@ -187,6 +231,36 @@ if __name__ == "__main__":
                 )
     m.run()
 
+    m = ModelV3(name="v3_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V3,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV4(name="v4_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V4,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV5(name="v5_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V5,
+                kind = 'st'
+                )
+    m.run()
+
+    m = ModelV6(name="v6_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V6,
+                kind = 'st'
+                )
+    m.run()
+
+
+
     print 'Done stage 1'
     print 
     ######## stage2 Models #########
@@ -201,6 +275,10 @@ if __name__ == "__main__":
                          
                          TEMP_PATH + 'v1_stage1_all_fold.csv',
                          TEMP_PATH + 'v2_stage1_all_fold.csv',
+                         TEMP_PATH + 'v3_stage1_all_fold.csv',
+                         TEMP_PATH + 'v4_stage1_all_fold.csv',
+                         TEMP_PATH + 'v5_stage1_all_fold.csv',
+                         TEMP_PATH + 'v6_stage1_all_fold.csv',
 
 
                         ),#targetはここに含まれる
@@ -209,6 +287,10 @@ if __name__ == "__main__":
                          
                          TEMP_PATH + 'v1_stage1_test.csv',
                          TEMP_PATH + 'v2_stage1_test.csv',
+                         TEMP_PATH + 'v3_stage1_test.csv',
+                         TEMP_PATH + 'v4_stage1_test.csv',
+                         TEMP_PATH + 'v5_stage1_test.csv',
+                         TEMP_PATH + 'v6_stage1_test.csv',
                        
                         ),
                 }
@@ -238,10 +320,11 @@ if __name__ == "__main__":
     testID = pd.DataFrame(testID, columns=['ID'])
     pred = pd.read_csv(TEMP_PATH + 'v1_stage2_TestInAllTrainingData.csv')
 
-    print 'Evaluation'
+    print 'Test evaluation'
     auc = eval_pred(label.target, pred.iloc[:,0], eval_type=eval_type)
     pred = pd.concat([testID, pred], axis=1)
     pred.to_csv(TEMP_PATH + 'final_submission.csv', index=False)
 
     
+
 
