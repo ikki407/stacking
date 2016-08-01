@@ -8,6 +8,7 @@ import os, sys, re
 import tables
 import itertools
 import logging
+import paratext
 
 ######### Problem Type #########
 eval_type_list = ('logloss', 'auc', 'rmse') 
@@ -98,8 +99,8 @@ def load_data(flist, drop_duplicates=False):
     X_train = pd.DataFrame()
     test = pd.DataFrame()
     for i in xrange(flist_len):
-        X_train = pd.concat([X_train,pd.read_csv(PATH+flist['train'][i])],axis=1)
-        test = pd.concat([test,pd.read_csv(PATH+flist['test'][i])],axis=1)
+        X_train = pd.concat([X_train, paratext.load_csv_to_pandas(PATH+flist['train'][i])],axis=1)
+        test = pd.concat([test, paratext.load_csv_to_pandas(PATH+flist['test'][i])],axis=1)
 
     y_train = X_train['target']
     del X_train['target']
@@ -131,7 +132,7 @@ def load_data(flist, drop_duplicates=False):
 def save_pred_as_submit_format(pred_path, output_file, col_name=('ID', "TARGET")):
     print 'writing prediction as submission format'
     print 'read prediction <{}>'.format(pred_path)
-    pred = pd.read_csv(pred_path).values
+    pred = paratext.load_csv_to_pandas(pred_path).values
     #(((test.mean(1) - test.mean(1).mean())/test.mean(1).std()/100. + 0.5).values + pred)/2.0
     submission = pd.read_csv(INPUT_PATH+SUBMIT_FORMAT)
     submission[col_name[1]] = pred
