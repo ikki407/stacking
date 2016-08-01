@@ -95,7 +95,7 @@ FEATURE_LIST_stage1 = {
                 }
 
 # need to get input shape for NN now
-X,y,test  = load_data(flist=FEATURE_LIST_stage1, drop_duplicates=True)
+X,y,test  = load_data(flist=FEATURE_LIST_stage1, drop_duplicates=False)
 assert((False in X.columns == test.columns) == False)
 nn_input_dim_NN = X.shape[1:]
 output_dim = len(set(y))
@@ -317,7 +317,7 @@ if __name__ == "__main__":
                         ),
                 }
 
-    X,y,test  = load_data(flist=FEATURE_LIST_stage2, drop_duplicates=True)
+    X,y,test  = load_data(flist=FEATURE_LIST_stage2, drop_duplicates=False)
     assert((False in X.columns == test.columns) == False)
     nn_input_dim_NN2 = X.shape[1]
     del X, y, test
