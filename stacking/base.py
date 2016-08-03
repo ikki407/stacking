@@ -76,14 +76,19 @@ from sklearn.metrics import mean_squared_error
 cv_id_name='cv_id' #change if using fixed cv_index file
 n_folds = 5
 
-def create_cv_id(train, n_folds_ = 5, cv_id_name=cv_id_name, seed=407):
+def create_cv_id(target, n_folds_ = 5, cv_id_name=cv_id_name, seed=407):
     try:
-        a = StratifiedKFold(train['target'],n_folds=n_folds_, shuffle=True, random_state=seed)
+        a = StratifiedKFold(target['target'],n_folds=n_folds_, shuffle=True, random_state=seed)
+        cv_index = a.test_folds
         print 'Done StratifiedKFold'
     except:
-        a = KFold(len(train),n_folds=n_folds_, shuffle=True, random_state=seed)
+        cv_index = np.empty(len(target))
+        a = KFold(len(target),n_folds=n_folds_, shuffle=True, random_state=seed)
+        for idx, i in enumerate(a):
+            cv_index[i[1]] = idx
+        cv_index = cv_index.astype(int)
         print 'Done Kfold'
-    cv_index = a.test_folds
+    
     np.save(INPUT_PATH + cv_id_name, cv_index)
     return 
 
@@ -92,18 +97,47 @@ def create_cv_id(train, n_folds_ = 5, cv_id_name=cv_id_name, seed=407):
 #feature listを渡してデータを作成するutil関数
 def load_data(flist, drop_duplicates=False):
     '''
-    flistにシリアライゼーションを渡すことでより効率的に
-    data構造をここで考慮
+    Usage: set train, target, and test key and feature files.
+
+    FEATURE_LIST_stage2 = {
+                'train':(
+                         TEMP_PATH + 'v1_stage1_all_fold.csv',
+                         TEMP_PATH + 'v2_stage1_all_fold.csv',
+                         TEMP_PATH + 'v3_stage1_all_fold.csv',
+                        ),#target is not in 'train'
+
+                'target':(
+                         INPUT_PATH + 'target.csv',
+                        ),#target is in 'target'
+
+                'test':(
+                         TEMP_PATH + 'v1_stage1_test.csv',
+                         TEMP_PATH + 'v2_stage1_test.csv',
+                         TEMP_PATH + 'v3_stage1_test.csv',
+                        ),
+                }
     '''
-    flist_len = len(flist['train'])
+    if (len(flist['train'])==0) or (len(flist['target'])==0) or (len(flist['test'])==0):
+        raise Exception('train, target, and test must be set at \
+                                    least one file, respectively.')
+
     X_train = pd.DataFrame()
     test = pd.DataFrame()
-    for i in xrange(flist_len):
-        X_train = pd.concat([X_train, paratext.load_csv_to_pandas(PATH+flist['train'][i])],axis=1)
-        test = pd.concat([test, paratext.load_csv_to_pandas(PATH+flist['test'][i])],axis=1)
 
-    y_train = X_train['target']
-    del X_train['target']
+    print 'Reading train dataset'
+    for i in flist['train']:
+        X_train = pd.concat([X_train, paratext.load_csv_to_pandas(PATH+i, allow_quoted_newlines=True)],axis=1)
+
+    print 'train dataset is created'
+
+
+    print 'Reading target data'
+    y_train = paratext.load_csv_to_pandas(PATH+flist['target'][0], allow_quoted_newlines=True)['target']
+
+    print 'Reading train dataset'
+    for i in flist['test']:
+        test = pd.concat([test, paratext.load_csv_to_pandas(PATH+i, allow_quoted_newlines=True)],axis=1)
+
     #del test['t_id']
     #print X_train.columns
     #print test.columns
@@ -125,14 +159,14 @@ def load_data(flist, drop_duplicates=False):
     #X_train = X_train[common_col]
     #test = test[common_col]
     #print 'shape after dropping constant features: {}'.format(X_train.shape)
-
+    
     return X_train, y_train, test 
 
 # ID is different by problem. So this function is disabled.
 def save_pred_as_submit_format(pred_path, output_file, col_name=('ID', "TARGET")):
     print 'writing prediction as submission format'
     print 'read prediction <{}>'.format(pred_path)
-    pred = paratext.load_csv_to_pandas(pred_path).values
+    pred = paratext.load_csv_to_pandas(pred_path, allow_quoted_newlines=True).values
     #(((test.mean(1) - test.mean(1).mean())/test.mean(1).std()/100. + 0.5).values + pred)/2.0
     submission = pd.read_csv(INPUT_PATH+SUBMIT_FORMAT)
     submission[col_name[1]] = pred
@@ -353,6 +387,7 @@ class BaseModel(BaseEstimator):
             train_fold = (a!=i)
             test_fold = (a==i)
             print "Fold", i
+            #print "train:", len(train_fold), "test: ", len(test)
             #print X
             #print train_fold
             X_train = X[train_fold].dropna(how='all')
@@ -482,7 +517,7 @@ class BaseModel(BaseEstimator):
         flistにシリアライゼーションを渡すことでより効率的に
         data構造をここで考慮
         '''
-        return load_data(self.flist, drop_duplicates=True )
+        return load_data(self.flist, drop_duplicates=False )
         
 
 
