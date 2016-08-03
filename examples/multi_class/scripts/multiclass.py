@@ -50,22 +50,21 @@ data_train, data_test, label_train, label_test = train_test_split(digits.data, d
 # concat data as pandas' dataframe format
 data_train = pd.DataFrame(data_train)
 label_train = pd.DataFrame(label_train, columns=['target'])
-train = pd.concat([data_train, label_train], axis=1)
 
 data_test = pd.DataFrame(data_test)
 label_test = pd.DataFrame(label_test, columns=['target'])
-test = data_test # not include target
 
 # save data under /data/input.
-train.to_csv(INPUT_PATH + 'train.csv', index=False)
-test.to_csv(INPUT_PATH + 'test.csv', index=False)
+data_train.to_csv(INPUT_PATH + 'train.csv', index=False)
+label_train.to_csv(INPUT_PATH + 'target.csv', index=False)
+data_test.to_csv(INPUT_PATH + 'test.csv', index=False)
 label_test.to_csv(INPUT_PATH + 'label_test.csv', index=False)
 
 # ----- END create dataset -----
 
 # -----create features -----
-train_log = train.iloc[:, :64].applymap(lambda x: np.log(x+1))
-test_log = test.iloc[:, :64].applymap(lambda x: np.log(x+1))
+train_log = data_train.iloc[:, :64].applymap(lambda x: np.log(x+1))
+test_log = data_test.iloc[:, :64].applymap(lambda x: np.log(x+1))
 
 train_log.columns = map(str, train_log.columns)
 test_log.columns = map(str, test_log.columns)
@@ -85,12 +84,18 @@ test_log.to_csv(FEATURES_PATH + 'test_log.csv', index=False)
 
 # FEATURE LISTS in Stage 1.
 FEATURE_LIST_stage1 = {
-                'train':(INPUT_PATH + 'train.csv',
+                'train':(
+                         INPUT_PATH + 'train.csv',
                          FEATURES_PATH + 'train_log.csv',
-                         
-                        ),#target is in 'train'
-                'test':(INPUT_PATH + 'test.csv',
-                        FEATURES_PATH + 'test_log.csv',
+                        ),
+
+                'target':(
+                         INPUT_PATH + 'target.csv',
+                        ),
+
+                'test':(
+                         INPUT_PATH + 'test.csv',
+                         FEATURES_PATH + 'test_log.csv',
                         ),
                 }
 
@@ -235,8 +240,8 @@ class ModelV1_stage2(BaseModel):
 if __name__ == "__main__":
     
     # Create cv-fold index
-    train = pd.read_csv(INPUT_PATH + 'train.csv')
-    create_cv_id(train, n_folds_ = 5, cv_id_name='cv_id', seed=407)
+    target = pd.read_csv(INPUT_PATH + 'target.csv')
+    create_cv_id(target, n_folds_ = 5, cv_id_name='cv_id', seed=407)
 
     ######## stage1 Models #########
     print 'Start stage 1 training'
@@ -302,8 +307,12 @@ if __name__ == "__main__":
                          TEMP_PATH + 'v4_stage1_all_fold.csv',
                          TEMP_PATH + 'v5_stage1_all_fold.csv',
                          TEMP_PATH + 'v6_stage1_all_fold.csv',
+                        ),
 
-                        ),#targetはここに含まれる
+                'target':(
+                         INPUT_PATH + 'target.csv',
+                        ),
+
                 'test':(INPUT_PATH + 'test.csv',
                          FEATURES_PATH + 'test_log.csv',
                          
@@ -312,8 +321,7 @@ if __name__ == "__main__":
                          TEMP_PATH + 'v3_stage1_test.csv',
                          TEMP_PATH + 'v4_stage1_test.csv',
                          TEMP_PATH + 'v5_stage1_test.csv',
-                         TEMP_PATH + 'v6_stage1_test.csv', 
-                       
+                         TEMP_PATH + 'v6_stage1_test.csv',                       
                         ),
                 }
 
