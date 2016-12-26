@@ -142,7 +142,6 @@ m.run()
 
 5. Final result is saved as `v1_stage2_TestInAllTrainingData.csv`.
 
-
 ## Installation
 To install stacking, `cd` to the stacking folder and run the install command**(up-to-date version, recommended)**:
 ```
