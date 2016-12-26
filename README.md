@@ -37,6 +37,111 @@ To run these examples, just run `sh run.sh`. Note that:
 5. Just run `sh run.sh` (`python scripts/XXX.py`).
 
 
+### Detailed Usage
+
+1. Set train dataset with its target data and test dataset.
+
+    ```python
+    FEATURE_LIST_stage1 = {
+                    'train':(
+                             INPUT_PATH + 'train.csv',
+                             FEATURES_PATH + 'train_log.csv',
+                            ),
+    
+                    'target':(
+                             INPUT_PATH + 'target.csv',
+                            ),
+    
+                    'test':(
+                             INPUT_PATH + 'test.csv',
+                             FEATURES_PATH + 'test_log.csv',
+                            ),
+                    }
+    ```
+
+2. Define model classes that inherit `BaseModel` class, which are used in Stage 1, Stage 2, ..., Stage N.
+
+    ```python
+    # For Stage 1
+    PARAMS_V1 = {
+            'colsample_bytree':0.80,
+            'learning_rate':0.1,"eval_metric":"auc",
+            'max_depth':5, 'min_child_weight':1,
+            'nthread':4,
+            'objective':'binary:logistic','seed':407,
+            'silent':1, 'subsample':0.60,
+            }
+    
+    class ModelV1(BaseModel):
+            def build_model(self):
+                return XGBClassifier(params=self.params, num_round=10)
+    
+    ...
+    
+    # For Stage 2
+    PARAMS_V1_stage2 = {
+                        'penalty':'l2',
+                        'tol':0.0001, 
+                        'C':1.0, 
+                        'random_state':None, 
+                        'verbose':0, 
+                        'n_jobs':8
+                        }
+    
+    class ModelV1_stage2(BaseModel):
+            def build_model(self):
+                return LR(**self.params)
+    ```
+    
+3. Train each models of Stage 1 for stacking.
+
+    ```python
+    m = ModelV1(name="v1_stage1",
+                flist=FEATURE_LIST_stage1,
+                params = PARAMS_V1,
+                kind = 'st'
+                )
+    m.run()
+    
+    ...
+    ```
+
+4. Train each model(s) of Stage 2 by using the prediction of Stage-1 models.
+
+    ```python
+    FEATURE_LIST_stage2 = {
+                'train': (
+                         TEMP_PATH + 'v1_stage1_all_fold.csv',
+                         TEMP_PATH + 'v2_stage1_all_fold.csv',
+                         TEMP_PATH + 'v3_stage1_all_fold.csv',
+                         TEMP_PATH + 'v4_stage1_all_fold.csv',
+                         ...
+                         ),
+    
+                'target':(
+                         INPUT_PATH + 'target.csv',
+                         ),
+    
+                'test': (
+                        TEMP_PATH + 'v1_stage1_test.csv',
+                        TEMP_PATH + 'v2_stage1_test.csv',
+                        TEMP_PATH + 'v3_stage1_test.csv',
+                        TEMP_PATH + 'v4_stage1_test.csv',
+                        ...                     
+                        ),
+                }
+    
+    # Models
+    m = ModelV1_stage2(name="v1_stage2",
+                    flist=FEATURE_LIST_stage2,
+                    params = PARAMS_V1_stage2,
+                    kind = 'st',
+                    )
+    m.run()
+    ```
+
+5. Final result is saved as `v1_stage2_TestInAllTrainingData.csv`.
+
 ## Installation
 To install stacking, `cd` to the stacking folder and run the install command**(up-to-date version, recommended)**:
 ```
