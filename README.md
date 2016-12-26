@@ -8,7 +8,8 @@ Stacking (stacked generalization)
 
 [ikki407/stacking](https://github.com/ikki407/stacking) - Simple and useful stacking library, written in Python.
 
-User can use models of scikit-learn, XGboost, and Keras for stacking.  As a feature of this library, **all out-of-fold predictions** can be saved for further analisys after training.
+User can use models of scikit-learn, XGboost, and Keras for stacking.  
+As a feature of this library, **all out-of-fold predictions** can be saved for further analisys after training.
 
 ## Description
 
