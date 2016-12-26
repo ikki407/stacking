@@ -179,9 +179,9 @@ Scikit-learn models can be used.
 
 Base model have some arguments.
 
-- 's': Stacking. Saving oof(out-of-fold) prediction({model_name}_all_fold.csv) and average of test prediction based on train-fold models({model_name}_test.csv). These files will be used for next level stacking.
+- 's': Stacking. Saving oof(out-of-fold) prediction(`{model_name}_all_fold.csv`) and average of test prediction based on train-fold models(`{model_name}_test.csv`). These files will be used for next level stacking.
 
-- 't': Training with all data and predict test({model_name}_TestInAllTrainingData.csv). In this training, no validation data are used.
+- 't': Training with all data and predict test(`{model_name}_TestInAllTrainingData.csv`). In this training, no validation data are used.
 
 - 'st': Stacking and then training with all data and predict test ('s' and 't').
 
@@ -194,6 +194,8 @@ Train and test feature set are defined here.
 Need to define CV-fold index.
 
 Any level stacking can be defined.
+
+![PredictionFiles](stacking.png "Prediction files")
 
 ## Reference
 
