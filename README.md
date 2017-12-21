@@ -144,6 +144,14 @@ To run these examples, just run `sh run.sh`. Note that:
 
 5. Final result is saved as `v1_stage2_TestInAllTrainingData.csv`.
 
+## Prerequisite
+
+- (MaxOS) Install xgboost first manually: `pip install xgboost`
+- (Optional) Install paratext: fast csv loading library
+    - From https://github.com/wiseio/paratext
+    - You need to install swig by using `brew install swig` before installing paratext if brew have been installed
+
+
 ## Installation
 To install stacking, `cd` to the stacking folder and run the install command**(up-to-date version, recommended)**:
 ```
