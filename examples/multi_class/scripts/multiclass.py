@@ -24,7 +24,7 @@ from keras.optimizers import SGD
 from keras.utils import np_utils
 from keras.layers.advanced_activations import LeakyReLU, PReLU
 from keras.layers.normalization import BatchNormalization
-from keras.regularizers import l1, l2, l1l2, activity_l2
+from keras.regularizers import l1, l2
 
 # ----- scikit-learn -----
 from sklearn.linear_model import LogisticRegression as LR
